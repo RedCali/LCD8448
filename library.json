@@ -1,0 +1,26 @@
+{
+  "name": "LCD8448",
+  "version": "1.0.0",
+  "keywords": "LCD,NOKIA,8448,5110",
+  "description": "LCD Display Library for the 8448 LCD Display (Nokia 5110 display)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RedCali/LCD8448.git"
+  },
+  "authors": [
+    {
+      "name": "Lauren from DFRobot",
+      "email": "Lauran.pan@gmail.com",
+      "url": "",
+      "maintainer": false
+    },
+    {
+      "name": "Bastian Geier",
+      "email": "mail@bastiangeier.de",
+      "url": "https://github.com/RedCali/LCD8448.git",
+      "maintainer": true
+    }
+  ],
+  "frameworks": "arduino,avr",
+  "platforms": "*"
+}
