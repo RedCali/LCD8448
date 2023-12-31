@@ -13,7 +13,7 @@
 #ifndef LCD8448_H_
 #define LCD8448_H_
 
-#define _LCD_VERSION "1.0.0"  // software version of this library
+#define LCD8448_VERSION "1.0.0"  // software version of this library
 
 #if defined(ARDUINO) && ARDUINO >= 100
 #include "Arduino.h"
