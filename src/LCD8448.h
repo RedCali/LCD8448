@@ -13,7 +13,7 @@
 #ifndef LCD8448_H_
 #define LCD8448_H_
 
-#include "LCD8448_PinConfig.h"
+#include "LCD8448_Config.h"
 
 #define LCD8448_VERSION "1.0.0"  // software version of this library
 
@@ -38,7 +38,6 @@
 
 class LCD8448 {
    private:
-    bool backLightInverted;
     unsigned char virtuelldisp[504];
     unsigned char virtuelldisp_temp[504];
 
@@ -132,11 +131,6 @@ class LCD8448 {
     LCD8448();
     ~LCD8448();
     void init(void) {
-        init(false);
-    }
-    void init(bool blInverted) {
-        backLightInverted = blInverted;
-
 #if defined(ARDUINO) && ARDUINO >= 100
         pinMode(SPI_SCK, OUTPUT);
         digitalWrite(SPI_SCK, LOW);
@@ -205,41 +199,60 @@ class LCD8448 {
 
     inline void backlight(unsigned char dat) {
 #if defined(ARDUINO) && ARDUINO >= 100
-        if ((dat == 1) != (backLightInverted == true))
+#ifdef BACKLIGHT_INVERTED
+        if (dat != 0)
+            digitalWrite(LCD_BL, LOW);
+        else
+            digitalWrite(LCD_BL, HIGH);
+#else
+        if (dat != 0)
             digitalWrite(LCD_BL, HIGH);
         else
             digitalWrite(LCD_BL, LOW);
+
+#endif
 #else
-        if ((dat == 1) != (backLightInverted == true))
+#ifdef BACKLIGHT_INVERTED
+        if (dat != 0)
             LCD_BL_PORT &= ~(1 << LCD_BL);
         else
             LCD_BL_PORT &= (1 << LCD_BL);
+#else
+        if (dat != 0)
+            LCD_BL_PORT &= (1 << LCD_BL);
+        else
+            LCD_BL_PORT &= ~(1 << LCD_BL);
+#endif
 #endif
     }
     inline void setBacklightOFF(void) {
 #if defined(ARDUINO) && ARDUINO >= 100
-        if (backLightInverted == true)
-            digitalWrite(LCD_BL, HIGH);
-        else
-            digitalWrite(LCD_BL, LOW);
+#ifdef BACKLIGHT_INVERTED
+        digitalWrite(LCD_BL, HIGH);
 #else
-        if (backLightInverted == true)
-            LCD_BL_PORT |= (1 << LCD_BL);
-        else
-            LCD_BL_PORT &= ~(1 << LCD_BL);
+        digitalWrite(LCD_BL, LOW);
+#endif
+#else
+#ifdef BACKLIGHT_INVERTED
+        LCD_BL_PORT |= (1 << LCD_BL);
+#else
+        LCD_BL_PORT &= ~(1 << LCD_BL);
+#endif
 #endif
     }
     inline void setBacklightON(void) {
 #if defined(ARDUINO) && ARDUINO >= 100
-        if (backLightInverted == true)
-            digitalWrite(LCD_BL, LOW);
-        else
-            digitalWrite(LCD_BL, HIGH);
+#ifdef BACKLIGHT_INVERTED
+        digitalWrite(LCD_BL, LOW);
 #else
-        if (backLightInverted == true)
-            LCD_BL_PORT &= ~(1 << LCD_BL);
-        else
-            LCD_BL_PORT |= (1 << LCD_BL);
+        digitalWrite(LCD_BL, HIGH);
+#endif
+#else
+#ifdef BACKLIGHT_INVERTED
+        LCD_BL_PORT &= ~(1 << LCD_BL);
+#else
+        LCD_BL_PORT |= (1 << LCD_BL);
+#endif
 #endif
     }
 

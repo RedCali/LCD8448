@@ -13,6 +13,9 @@
 #ifndef LCD8448_PIN_CONFIG_H_
 #define LCD8448_PIN_CONFIG_H_
 
+// Define here if backlight signal is inverted
+#define BACKLIGHT_INVERTED
+
 // LCD PIN definition
 #if defined(ARDUINO) && ARDUINO >= 100  // SPI Interface --- (using Arduino Digital Pin 2,3,4,5,6)
 #define LCD_BL 7                        // Back light control
