@@ -19,17 +19,9 @@
 
 LCD8448 lcd = LCD8448();
 
-LCD8448::LCD8448() {  // constructor
-}
-
-LCD8448::~LCD8448() {
-}
-
-void LCD8448::set_XY(uint8_t X, uint8_t Y) {
-    writeCommand(0x40 | Y);  // column
-    writeCommand(0x80 | X);  // row
-}
-
+#pragma region PUBLIC
+#pragma region GENERAL METHODS
+/**************************************************************************************/
 void LCD8448::clear(void) {
     writeCommand(0x0c);
     writeCommand(0x80);
@@ -38,6 +30,15 @@ void LCD8448::clear(void) {
         writeData(0);
 }
 
+void LCD8448::set_XY(uint8_t X, uint8_t Y) {
+    writeCommand(0x40 | Y);  // column
+    writeCommand(0x80 | X);  // row
+}
+/**************************************************************************************/
+#pragma endregion GENERAL METHODS
+
+#pragma region DIRECT DISPLAY METHODS
+/**************************************************************************************/
 void LCD8448::draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map) {
     draw_bmp_pixel(X, Y, map, 84, 48);
 }
@@ -123,7 +124,10 @@ void LCD8448::write_string_big(uint8_t X, uint8_t Y, const char *str, uint8_t mo
             X += 12;
     }
 }
+/**************************************************************************************/
+#pragma endregion DIRECT DISPLAY METHODS
 
+#pragma region SPECIAL DISPLAY METHODS
 /**************************************************************************************/
 void LCD8448::write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t ch_with, uint8_t num, uint8_t line, uint8_t row) {
     unsigned char i, n;
@@ -144,6 +148,7 @@ void LCD8448::write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_
         set_XY((X + (ch_with + row) * i), Y);
     }
 }
+
 unsigned char LCD8448::prop_write_char(char c, uint8_t mode) {
     int line, line_s = 0, line_e = 2;
     unsigned char *pFont;
@@ -168,6 +173,7 @@ unsigned char LCD8448::prop_write_char(char c, uint8_t mode) {
     writeData((mode == MENU_NORMAL) ? 0 : 0xff);
     return ((unsigned char)(line_e + 2 - line_s));
 }
+
 void LCD8448::prop_write_string(uint8_t X, uint8_t Y, const char *str, uint8_t mode) {
     set_XY(X, Y);
     while (*str) {
@@ -175,7 +181,7 @@ void LCD8448::prop_write_string(uint8_t X, uint8_t Y, const char *str, uint8_t m
         str++;
     }
 }
-/*************************************************************************************/
+/**************************************************************************************/
 void LCD8448::write_number_big(uint8_t X, uint8_t Y, int number, uint8_t comma, uint8_t digits, uint8_t mode) {
     unsigned char lauf = 0;
     char numberInArray[digits + 2];
@@ -196,6 +202,7 @@ void LCD8448::write_number_big(uint8_t X, uint8_t Y, int number, uint8_t comma, 
 
     write_string_big(10, 1, numberInArray, MENU_NORMAL);
 }
+
 void LCD8448::write_number_big2(uint8_t X, uint8_t Y, uint8_t number) {
     unsigned char *ptr = (unsigned char *)font20_24;
     for (char i = 0; i < 3; i++) {
@@ -205,7 +212,10 @@ void LCD8448::write_number_big2(uint8_t X, uint8_t Y, uint8_t number) {
     }
 }
 /*************************************************************************************/
+#pragma endregion SPECIAL DISPLAY METHODS
 
+#pragma region VIRTUAL DISPLAY METHODS
+/**************************************************************************************/
 /*additional drawing functionality*/
 void LCD8448::vd_clear(void) {
     for (int i = 0; i < 504; i++) {
@@ -361,8 +371,8 @@ void LCD8448::vd_write_circle(uint8_t X0, uint8_t Y0, uint8_t radius) {
     }
 }
 
+#pragma region SPECIAL DISPLAY METHODS
 /*************************************************************************************/
-
 void LCD8448::vd_write_framework(char *head, uint8_t mode) {
     // head in center position
     uint8_t lkopf = strlen(head);
@@ -494,3 +504,8 @@ void LCD8448::vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode) {
         vd_set_pixel_byte(X0 + i, Y0, (mode == MENU_NORMAL) ? ch : (ch ^ 0xff));
     }
 }
+/**************************************************************************************/
+#pragma endregion SPECIAL DISPLAY METHODS
+/**************************************************************************************/
+#pragma endregion VIRTUAL DISPLAY METHODS
+#pragma endregion PUBLIC

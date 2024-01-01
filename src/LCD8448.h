@@ -38,63 +38,52 @@
 
 class LCD8448 {
    private:
+#pragma region PRIVATE
     unsigned char virtuelldisp[504];
     unsigned char virtuelldisp_temp[504];
 
+#pragma region INTERNAL METHODS
     inline void chipSelect() {
+        // Chip Select/Enable: Active LOW
 #if defined(ARDUINO) && ARDUINO >= 100
-        digitalWrite(LCD_BL, LOW);
+        digitalWrite(SPI_CS, LOW);
 #else
         LCD_PORT &= ~(1 << SPI_CS);
 #endif
     }
     inline void chipDeSelect() {
+        // Chip DeSelect/Disable: InActive HIGH
 #if defined(ARDUINO) && ARDUINO >= 100
-        digitalWrite(LCD_BL, HIGH);
+        digitalWrite(SPI_CS, HIGH);
 #else
         LCD_PORT |= (1 << SPI_CS);
 #endif
     }
 
-    void writeCommand(uint8_t data)  // Sending Routine Master Mode (polling)
-    {
-#if defined(ARDUINO) && ARDUINO >= 100
-        // Chip Enable: Active LOW
-        digitalWrite(SPI_CS, LOW);
+    inline void chipWriteCommand() {
         // D/C=0:the current data byte is interpreted as command byte
+#if defined(ARDUINO) && ARDUINO >= 100
         digitalWrite(LCD_DC, COMMAND);
-
-        //
-        for (uint8_t i = 0; i < 8; i++) {
-            if (data & 0x80)  // 1000 0000
-            {
-                digitalWrite(SPI_MOSI, HIGH);  //
-            } else {
-                digitalWrite(SPI_MOSI, LOW);  //
-            }
-            digitalWrite(SPI_SCK, LOW);
-            data = data << 1;
-            digitalWrite(SPI_SCK, HIGH);  //
-        }
-        digitalWrite(SPI_CS, HIGH);
 #else
-        LCD_PORT &= ~(1 << SPI_CS);
         LCD_PORT &= ~(1 << LCD_DC);
-
-        SPDR = data;  // send Character
-
-        waitForTransmissionReady();
 #endif
     }
-    void writeData(uint8_t data)  // Sending Routine Master Mode (polling)
-    {
-#if defined(ARDUINO) && ARDUINO >= 100
-        // Chip Enable: Active LOW
-        digitalWrite(SPI_CS, LOW);
+    inline void chipWriteData() {
         // D/C=1:write data to display RAM
+#if defined(ARDUINO) && ARDUINO >= 100
         digitalWrite(LCD_DC, DATA);
+#else
+        LCD_PORT |= (1 << LCD_DC);
+#endif
+    }
 
-        //
+    void writeCommand(uint8_t data) {  // Sending Routine Master Mode (polling)
+        // Chip Select/Enable: Active LOW
+        chipSelect();
+        // D/C=0:the current data byte is interpreted as command byte
+        chipWriteCommand();
+#if defined(ARDUINO) && ARDUINO >= 100
+        // Run trough the single bits to transfer
         for (uint8_t i = 0; i < 8; i++) {
             if (data & 0x80)  // 1000 0000
             {
@@ -106,15 +95,38 @@ class LCD8448 {
             data = data << 1;
             digitalWrite(SPI_SCK, HIGH);  //
         }
-        digitalWrite(SPI_CS, HIGH);
 #else
-        LCD_PORT &= ~(1 << SPI_CS);
-        LCD_PORT |= (1 << LCD_DC);
-
         SPDR = data;  // send Character
 
         waitForTransmissionReady();
 #endif
+        // Chip DeSelect/Disable: InActive HIGH
+        chipDeSelect();
+    }
+    void writeData(uint8_t data) {  // Sending Routine Master Mode (polling)
+        // Chip Select/Enable: Active LOW
+        chipSelect();
+        //  D/C=1:write data to display RAM
+        chipWriteData();
+#if defined(ARDUINO) && ARDUINO >= 100
+        // Run trough the single bits to transfer
+        for (uint8_t i = 0; i < 8; i++) {
+            if (data & 0x80) {                 // 1000 0000
+                digitalWrite(SPI_MOSI, HIGH);  //
+            } else {
+                digitalWrite(SPI_MOSI, LOW);  //
+            }
+            digitalWrite(SPI_SCK, LOW);
+            data = data << 1;
+            digitalWrite(SPI_SCK, HIGH);  //
+        }
+#else
+        SPDR = data;  // send Character
+
+        waitForTransmissionReady();
+#endif
+        // Chip DeSelect/Disable: InActive HIGH
+        chipDeSelect();
     }
 
 #if defined(ARDUINO) && ARDUINO >= 100
@@ -123,13 +135,17 @@ class LCD8448 {
     inline void waitForTransmissionReady(void) {
         while (!(SPSR & (1 << SPIF)))
             ;  // wait until Char is sent
-        LCD_PORT |= (1 << SPI_CS);
     }
 #endif
+#pragma endregion INTERNAL METHODS
+#pragma endregion PRIVATE
 
    public:
-    LCD8448();
-    ~LCD8448();
+#pragma region PUBLIC
+#pragma region GENERAL METHODS
+    /**************************************************************************************/
+    LCD8448() {}
+    ~LCD8448() {}
     void init(void) {
 #if defined(ARDUINO) && ARDUINO >= 100
         pinMode(SPI_SCK, OUTPUT);
@@ -225,6 +241,7 @@ class LCD8448 {
 #endif
 #endif
     }
+
     inline void setBacklightOFF(void) {
 #if defined(ARDUINO) && ARDUINO >= 100
 #ifdef BACKLIGHT_INVERTED
@@ -240,6 +257,7 @@ class LCD8448 {
 #endif
 #endif
     }
+
     inline void setBacklightON(void) {
 #if defined(ARDUINO) && ARDUINO >= 100
 #ifdef BACKLIGHT_INVERTED
@@ -256,8 +274,13 @@ class LCD8448 {
 #endif
     }
 
-    void set_XY(uint8_t X, uint8_t Y);
     void clear(void);
+    void set_XY(uint8_t X, uint8_t Y);
+    /**************************************************************************************/
+#pragma endregion GENERAL METHODS
+
+#pragma region DIRECT DISPLAY METHODS
+    /**************************************************************************************/
     void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map);
     void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map, uint8_t Pix_x, uint8_t Pix_y);
     void draw_bmp_pixel_P(uint8_t X, uint8_t Y, const unsigned char *map);
@@ -265,7 +288,10 @@ class LCD8448 {
     void write_string(uint8_t X, uint8_t Y, const char *str, uint8_t mode);
     void write_char_big(uint8_t X, uint8_t Y, unsigned char c, uint8_t mode);
     void write_string_big(uint8_t X, uint8_t Y, const char *str, uint8_t mode);
+    /**************************************************************************************/
+#pragma endregion DIRECT DISPLAY METHODS
 
+#pragma region SPECIAL DISPLAY METHODS
     /**************************************************************************************/
     void write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t ch_with, uint8_t num, uint8_t line, uint8_t row);
     unsigned char prop_write_char(char c, uint8_t mode);
@@ -274,6 +300,10 @@ class LCD8448 {
     void write_number_big(uint8_t X, uint8_t Y, int number, uint8_t comma, uint8_t digits, uint8_t mode);
     void write_number_big2(uint8_t X, uint8_t Y, uint8_t number);
     /*************************************************************************************/
+#pragma endregion SPECIAL DISPLAY METHODS
+
+#pragma region VIRTUAL DISPLAY METHODS
+    /**************************************************************************************/
     void vd_clear(void);
     void vd_print(void);
     void vd_set_pixel(uint8_t X0, uint8_t Y0);
@@ -286,13 +316,19 @@ class LCD8448 {
     void vd_write_line(uint8_t X0, uint8_t Y0, uint8_t X1, uint8_t Y1);
     void vd_write_rect(uint8_t X0, uint8_t Y0, uint8_t a, uint8_t b);
     void vd_write_circle(uint8_t X0, uint8_t Y0, uint8_t radius);
-    /*************************************************************************************/
+#pragma region SPECIAL DISPLAY METHODS
+    /**************************************************************************************/
     void vd_write_framework(char *head, uint8_t mode);
     void vd_alert(const char *text);
     void vd_question(const char *, uint8_t);
     void vd_overlayON(void);
     void vd_overlayOFF(void);
     void vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode);
+    /**************************************************************************************/
+#pragma endregion SPECIAL DISPLAY METHODS
+    /**************************************************************************************/
+#pragma endregion VIRTUAL DISPLAY METHODS
+#pragma endregion PUBLIC
 };
 extern LCD8448 lcd;
 
