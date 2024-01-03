@@ -146,58 +146,71 @@ class LCD8448 {
 
    public:
 #pragma region PUBLIC
+    enum LCD_Mode {
+        // Display Control Instruction,  bit DB3 = 1
+        //                      // 3D0E
+        MODE_BLANK = 0x08,    // 1000 - D=0 / E=0
+        MODE_ALL_ON = 0x09,   // 1001 - D=0 / E=1
+        MODE_NORMAL = 0x0C,   // 1100 - D=1 / E=0
+        MODE_INVERTED = 0x0D  // 1101 - D=1 / E=1
+    };
+
 #pragma region GENERAL METHODS
     /**************************************************************************************/
     LCD8448() {}
+
     ~LCD8448() {}
-    void init(void) {
+
+    inline void init(void) {
+        init(LCD8448::MODE_NORMAL);
+    }
+
+    void init(LCD_Mode _mode) {
 #if defined(ARDUINO) && ARDUINO >= 100
         pinMode(SPI_SCK, OUTPUT);
-        digitalWrite(SPI_SCK, LOW);
         pinMode(SPI_MOSI, OUTPUT);
-        digitalWrite(SPI_MOSI, LOW);
-        pinMode(LCD_DC, OUTPUT);
-        digitalWrite(LCD_DC, LOW);
         pinMode(SPI_CS, OUTPUT);
+
+        digitalWrite(SPI_SCK, LOW);
+        digitalWrite(SPI_MOSI, LOW);
         digitalWrite(SPI_CS, LOW);
+
+        pinMode(LCD_DC, OUTPUT);
         pinMode(LCD_RST, OUTPUT);
-        digitalWrite(LCD_RST, LOW);
-
         pinMode(LCD_BL, OUTPUT);
-        digitalWrite(LCD_BL, LOW);
 
+        digitalWrite(LCD_DC, LOW);
         digitalWrite(LCD_RST, LOW);
-        delayMicroseconds(1);
-        digitalWrite(LCD_RST, HIGH);
-
-        digitalWrite(SPI_CS, LOW);  // Chip Select,Slave Transmit Enable(active low,Master Output)
-        delayMicroseconds(1);
-        digitalWrite(SPI_CS, HIGH);
-        delayMicroseconds(1);
-
         setBacklightOFF();
-
 #else
-        LCD_BL_DDR |= (1 << LCD_BL);
-        LCD_DDR |= (1 << LCD_RST) | (1 << LCD_DC);
-        LCD_PORT &= ~(1 << LCD_RST);
-
         LCD_DDR |= (1 << SPI_CS) | (1 << SPI_MOSI) | (1 << SPI_SCK);
+        LCD_DDR |= (1 << LCD_RST) | (1 << LCD_DC);
+        LCD_BL_DDR |= (1 << LCD_BL);
+
+        LCD_PORT &= ~((1 << LCD_RST) | (1 << LCD_DC));
+        setBacklightOFF();
 
         SPCR = (1 << SPE) | (1 << MSTR);  //|(1<<SPR0);	// enable SPI in Master Mode with SCK = CK/4
         SPSR = (1 << SPI2X);
         // IOReg   = SPSR;                 			// clear SPIF bit in SPSR
         // SPSR
         // SPDR = 0;
+#endif
+        // turn off the backlight
+        setBacklightOFF();
+        // reset Display
+        reset();
 
+        // toggle chip select
+        chipSelect();  // Chip Select,Slave Transmit Enable(active low,Master Output)
+        for (int i = 0; i < 1000; i++) {
+        };
+        chipDeSelect();
         for (int i = 0; i < 1000; i++) {
         };
 
-        LCD_PORT |= (1 << LCD_RST);
-#endif
-
         // data_type=0, all are command bytes
-        writeCommand(0x21);  // Function Set:0 0 1 0 0 PD V H=0010 0001;PD=0,V=0,H=1;
+        writeCommand(0x21);  // Function Set:0010 0001 --> PD=0, V=0, H=1;
         writeCommand(0xc0);  // Set Vop:1 Vop6 Vop5 Vop4 Vop3 Vop2 Vop1 Vop0=1100 0000
         writeCommand(0x06);  // Set Temperature Coefficient:0 0 0 0 0 1 Tc1 Tc0=0000 0110;Tc1=1,Tc0=0(Vlcd temperature coefficient 2)
         writeCommand(0x13);  // Set Bias System (BSx):0 0 0 1 0 BS2 BS1 BS0=0001 0011;BS2=0, BS1=1, BS0=1==>N=4,MUX RATE=1:48
@@ -207,14 +220,29 @@ class LCD8448 {
         clear();
         vd_clear();
 
-        writeCommand(0x0c);
-        setBacklightOFF();
+        mode(_mode);
         chipDeSelect();
     }
 
     inline void off(void) {
         setBacklightOFF();
-        clear();
+        reset();
+    }
+
+    inline void reset(void) {
+#if defined(ARDUINO) && ARDUINO >= 100
+        digitalWrite(LCD_RST, LOW);
+        delayMicroseconds(1);
+        digitalWrite(LCD_RST, HIGH);
+        delayMicroseconds(1);
+#else
+        LCD_PORT |= (1 << LCD_RST);
+        for (int i = 0; i < 1000; i++) {
+        };
+        LCD_PORT |= (1 << LCD_RST);
+        for (int i = 0; i < 1000; i++) {
+        };
+#endif
     }
 
     inline void backlight(unsigned char dat) {
@@ -278,7 +306,18 @@ class LCD8448 {
 #endif
     }
 
+    inline void mode(LCD_Mode mode) {
+#ifdef LCD_DEBUG
+#if defined(ARDUINO) && ARDUINO >= 100
+        Serial.print("Selected Display mode: ");
+        Serial.println(mode, HEX);
+#endif
+#endif
+        writeCommand(mode);
+    }
+
     void clear(void);
+
     void set_XY(uint8_t X, uint8_t Y);
     /**************************************************************************************/
 #pragma endregion GENERAL METHODS
