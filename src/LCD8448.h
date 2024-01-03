@@ -181,14 +181,12 @@ class LCD8448 {
 
         digitalWrite(LCD_DC, LOW);
         digitalWrite(LCD_RST, LOW);
-        setBacklightOFF();
 #else
         LCD_DDR |= (1 << SPI_CS) | (1 << SPI_MOSI) | (1 << SPI_SCK);
         LCD_DDR |= (1 << LCD_RST) | (1 << LCD_DC);
         LCD_BL_DDR |= (1 << LCD_BL);
 
         LCD_PORT &= ~((1 << LCD_RST) | (1 << LCD_DC));
-        setBacklightOFF();
 
         SPCR = (1 << SPE) | (1 << MSTR);  //|(1<<SPR0);	// enable SPI in Master Mode with SCK = CK/4
         SPSR = (1 << SPI2X);
