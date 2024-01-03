@@ -13,6 +13,9 @@
 #ifndef LCD8448_PIN_CONFIG_H_
 #define LCD8448_PIN_CONFIG_H_
 
+// Commend / Uncommend the define for Debugging
+//#define LCD_DEBUG
+
 // Define here if backlight signal is inverted
 #define BACKLIGHT_INVERTED
 
