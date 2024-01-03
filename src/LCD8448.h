@@ -51,6 +51,7 @@ class LCD8448 {
         LCD_PORT &= ~(1 << SPI_CS);
 #endif
     }
+
     inline void chipDeSelect() {
         // Chip DeSelect/Disable: InActive HIGH
 #if defined(ARDUINO) && ARDUINO >= 100
@@ -68,6 +69,7 @@ class LCD8448 {
         LCD_PORT &= ~(1 << LCD_DC);
 #endif
     }
+
     inline void chipWriteData() {
         // D/C=1:write data to display RAM
 #if defined(ARDUINO) && ARDUINO >= 100
@@ -103,6 +105,7 @@ class LCD8448 {
         // Chip DeSelect/Disable: InActive HIGH
         chipDeSelect();
     }
+
     void writeData(uint8_t data) {  // Sending Routine Master Mode (polling)
         // Chip Select/Enable: Active LOW
         chipSelect();
@@ -137,6 +140,7 @@ class LCD8448 {
             ;  // wait until Char is sent
     }
 #endif
+
 #pragma endregion INTERNAL METHODS
 #pragma endregion PRIVATE
 
