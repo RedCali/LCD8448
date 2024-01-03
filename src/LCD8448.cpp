@@ -27,12 +27,12 @@ void LCD8448::clear(void) {
     writeCommand(0x80);
     set_XY(0, 0);
     for (int i = 0; i < 504; i++)  // 6*84
-        writeData(0);
+        writeData(0x00);
 }
 
 void LCD8448::set_XY(uint8_t X, uint8_t Y) {
-    writeCommand(0x40 | Y);  // column
-    writeCommand(0x80 | X);  // row
+    writeCommand(0x40 | (Y & 0x07));  // column
+    writeCommand(0x80 | (X & 0x3F));  // row
 }
 /**************************************************************************************/
 #pragma endregion GENERAL METHODS
