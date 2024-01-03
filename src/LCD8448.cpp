@@ -13,9 +13,10 @@
 
 #include <math.h>
 
-#include "LCD8448_font.h"
 #include "LCD8448_font_big.h"
 #include "LCD8448_font_h.h"
+#include "LCD8448_font.h"
+#include "LCD8448_symbols.h"
 
 LCD8448 lcd = LCD8448();
 
@@ -496,11 +497,47 @@ void LCD8448::vd_overlayOFF(void) {
 void LCD8448::vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode) {
     // Battery symbol
     unsigned char ch;
-    unsigned char *pFont;
-    pFont = (unsigned char *)battery;
+    unsigned char *pBatterie;
+    pBatterie = (unsigned char *)battery;
     // set_XY(0,5);
     for (char i = 0; i < 8; i++) {
-        ch = pgm_read_byte(pFont + i + 8 * state);
+        ch = pgm_read_byte(pBatterie + i + 8 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == MENU_NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
+
+void LCD8448::vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode) {
+    // Network symbol
+    unsigned char ch;
+    unsigned char *pWireless;
+    pWireless = (unsigned char *)wireless;
+    // set_XY(0,5);
+    for (char i = 0; i < 8; i++) {
+        ch = pgm_read_byte(pWireless + i + 8 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == MENU_NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
+
+void LCD8448::vd_network(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode) {
+    // Network symbol
+    unsigned char ch;
+    unsigned char *pNetwork;
+    pNetwork = (unsigned char *)network;
+    // set_XY(0,5);
+    for (char i = 0; i < 7; i++) {
+        ch = pgm_read_byte(pNetwork + i + 7 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == MENU_NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
+
+void LCD8448::vd_antenna(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode) {
+    // Network symbol
+    unsigned char ch;
+    unsigned char *pAntenna;
+    pAntenna = (unsigned char *)antenna;
+    // set_XY(0,5);
+    for (char i = 0; i < 7; i++) {
+        ch = pgm_read_byte(pAntenna + i + 7 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == MENU_NORMAL) ? ch : (ch ^ 0xff));
     }
 }

@@ -10,10 +10,10 @@
 * Any suggestions are welcome.
 */
 #pragma once
-#ifndef LCD8448_PIN_CONFIG_H_
-#define LCD8448_PIN_CONFIG_H_
+#ifndef LCD8448_CONFIG_H_
+#define LCD8448_CONFIG_H_
 
-// Commend / Uncommend the define for Debugging
+// Commend / uncommend the define for Debugging
 //#define LCD_DEBUG
 
 // Define here if backlight signal is inverted
@@ -44,4 +44,4 @@
 #define LCD_BL PIND7  // Back light control
 #endif
 
-#endif /* LCD8448_PIN_CONFIG_H_ */
+#endif /* LCD8448_CONFIG_H_ */

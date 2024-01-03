@@ -365,6 +365,9 @@ class LCD8448 {
     void vd_overlayON(void);
     void vd_overlayOFF(void);
     void vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode);
+    void vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode);
+    void vd_network(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode);
+    void vd_antenna(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode);
     /**************************************************************************************/
 #pragma endregion SPECIAL DISPLAY METHODS
     /**************************************************************************************/
