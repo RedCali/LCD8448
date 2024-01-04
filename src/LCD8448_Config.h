@@ -1,11 +1,16 @@
 /*
 * LCD Display Library for the 8448 LCD Display (Nokia 5110 display)
 * Base		: Lauren from DFRobot / version 0.3
-* Date     : 06.01.2012
-* E-mail   : Lauran.pan@gmail.com
+* Date      : 06.01.2012
+* E-mail    : Lauran.pan@gmail.com
 
-* modified	: Dominik and Bastian
+* Modified	: Dominik Schubert
+* Date      : 06.01.2013
+
+* Modified	: Bastian Geier
+* Date      : 30.12.2023
 * E-mail	: mail@bastiangeier.de
+* Repo      : https://github.com/RedCali/LCD8448.git
 
 * Any suggestions are welcome.
 */
@@ -17,7 +22,7 @@
 //#define LCD_DEBUG
 
 // Define here if backlight signal is inverted
-#define BACKLIGHT_INVERTED
+//#define BACKLIGHT_INVERTED
 
 // LCD PIN definition
 #if defined(ARDUINO) && ARDUINO >= 100  // SPI Interface --- (using Arduino Digital Pin 2,3,4,5,6)

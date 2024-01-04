@@ -1,11 +1,16 @@
 /*
 * LCD Display Library for the 8448 LCD Display (Nokia 5110 display)
 * Base		: Lauren from DFRobot / version 0.3
-* Date     : 06.01.2012
-* E-mail   : Lauran.pan@gmail.com
+* Date      : 06.01.2012
+* E-mail    : Lauran.pan@gmail.com
 
-* modified	: Dominik and Bastian
+* Modified	: Dominik Schubert
+* Date      : 06.01.2013
+
+* Modified	: Bastian Geier
+* Date      : 30.12.2023
 * E-mail	: mail@bastiangeier.de
+* Repo      : https://github.com/RedCali/LCD8448.git
 
 * Any suggestions are welcome.
 */
