@@ -29,10 +29,6 @@
 #include <string.h>
 
 // Constant definition
-#define MENU_NORMAL 1
-#define MENU_HIGHLIGHT 0
-#define OFF 0
-#define ON 1
 #define COMMAND 0
 #define DATA 1
 
@@ -146,13 +142,18 @@ class LCD8448 {
 
    public:
 #pragma region PUBLIC
-    enum LCD_Mode {
+    enum LCD_Mode : uint8_t {
         // Display Control Instruction,  bit DB3 = 1
-        //                      // 3D0E
+        //                    // 3D0E
         MODE_BLANK = 0x08,    // 1000 - D=0 / E=0
         MODE_ALL_ON = 0x09,   // 1001 - D=0 / E=1
-        MODE_NORMAL = 0x0C,   // 1100 - D=1 / E=0
+        MODE_REGULAR = 0x0C,  // 1100 - D=1 / E=0
         MODE_INVERTED = 0x0D  // 1101 - D=1 / E=1
+    };
+
+    enum LCD_Display : uint8_t {
+        NORMAL = 0x01,
+        INVERTED = 0x00
     };
 
 #pragma region GENERAL METHODS
@@ -162,7 +163,7 @@ class LCD8448 {
     ~LCD8448() {}
 
     inline void init(void) {
-        init(LCD8448::MODE_NORMAL);
+        init(LCD8448::MODE_REGULAR);
     }
 
     void init(LCD_Mode _mode) {
@@ -325,20 +326,20 @@ class LCD8448 {
     void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map);
     void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map, uint8_t Pix_x, uint8_t Pix_y);
     void draw_bmp_pixel_P(uint8_t X, uint8_t Y, const unsigned char *map);
-    void write_char(unsigned char c, uint8_t mode);
-    void write_string(uint8_t X, uint8_t Y, const char *str, uint8_t mode);
-    void write_char_big(uint8_t X, uint8_t Y, unsigned char c, uint8_t mode);
-    void write_string_big(uint8_t X, uint8_t Y, const char *str, uint8_t mode);
+    void write_char(unsigned char c, LCD_Display mode);
+    void write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode);
+    void write_char_big(uint8_t X, uint8_t Y, unsigned char c, LCD_Display mode);
+    void write_string_big(uint8_t X, uint8_t Y, const char *str, LCD_Display mode);
     /**************************************************************************************/
 #pragma endregion DIRECT DISPLAY METHODS
 
 #pragma region SPECIAL DISPLAY METHODS
     /**************************************************************************************/
     void write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t ch_with, uint8_t num, uint8_t line, uint8_t row);
-    unsigned char prop_write_char(char c, uint8_t mode);
-    void prop_write_string(uint8_t X, uint8_t Y, const char *str, uint8_t mode);
+    unsigned char prop_write_char(char c, LCD_Display mode);
+    void prop_write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode);
     /*************************************************************************************/
-    void write_number_big(uint8_t X, uint8_t Y, int number, uint8_t comma, uint8_t digits, uint8_t mode);
+    void write_number_big(uint8_t X, uint8_t Y, int number, uint8_t comma, uint8_t digits, LCD_Display mode);
     void write_number_big2(uint8_t X, uint8_t Y, uint8_t number);
     /*************************************************************************************/
 #pragma endregion SPECIAL DISPLAY METHODS
@@ -350,24 +351,24 @@ class LCD8448 {
     void vd_set_pixel(uint8_t X0, uint8_t Y0);
     void vd_set_pixel_byte(uint8_t X0, uint8_t Y0, uint8_t c);
     void vd_set_pixel_byte_any(uint8_t X0, uint8_t Y0, uint8_t c);
-    void vd_write_char(uint8_t X, uint8_t Y, char c, uint8_t mode);
-    void vd_write_char_v(uint8_t X, uint8_t Y, char c, uint8_t mode);
-    void vd_write_string(uint8_t X, uint8_t Y, const char *str, uint8_t mode);
-    void vd_write_string_v(uint8_t X, uint8_t Y, const char *str, uint8_t mode);
+    void vd_write_char(uint8_t X, uint8_t Y, char c, LCD_Display mode);
+    void vd_write_char_v(uint8_t X, uint8_t Y, char c, LCD_Display mode);
+    void vd_write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode);
+    void vd_write_string_v(uint8_t X, uint8_t Y, const char *str, LCD_Display mode);
     void vd_write_line(uint8_t X0, uint8_t Y0, uint8_t X1, uint8_t Y1);
     void vd_write_rect(uint8_t X0, uint8_t Y0, uint8_t a, uint8_t b);
     void vd_write_circle(uint8_t X0, uint8_t Y0, uint8_t radius);
 #pragma region SPECIAL DISPLAY METHODS
     /**************************************************************************************/
-    void vd_write_framework(char *head, uint8_t mode);
+    void vd_write_framework(char *head, LCD_Display mode);
     void vd_alert(const char *text);
-    void vd_question(const char *, uint8_t);
+    void vd_question(const char *question, uint8_t aktiv);
     void vd_overlayON(void);
     void vd_overlayOFF(void);
-    void vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode);
-    void vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode);
-    void vd_network(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode);
-    void vd_antenna(uint8_t X0, uint8_t Y0, uint8_t state, uint8_t mode);
+    void vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_network(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_antenna(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     /**************************************************************************************/
 #pragma endregion SPECIAL DISPLAY METHODS
     /**************************************************************************************/
