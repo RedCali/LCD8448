@@ -6,10 +6,10 @@ It's based on de Library from Lauren from DFRobot / "LCD4884" version 0.3
 
 See [LCD8448](https://github.com/RedCali/LCD8448.git) for more detailed information on how to use LCD8448
 
-## Includ the Library in your project
+## Include the Library in your project
 
 To include the Library in ypur project you need to install it or take a copy in your project.  
-Copy the `LCD8448_Config.h` file beside your `main.cpp` to overwrite the default configuration and adjust it to the projects needs.
+Copy the `LCD8448_Config.h` file beside your `main.cpp` (or any other folder) to overwrite the default configuration and adjust it to the project needs.
 
 ```cpp
 // Include LCD definitions - Overwrite the Library LCD Config File
@@ -19,6 +19,10 @@ Copy the `LCD8448_Config.h` file beside your `main.cpp` to overwrite the default
 ```
 
 ## Using with diffrent IDE'S
+
+### Arduino
+
+The easiest way to get started on the Arduino Platform is, to use an example project like `LCD8448_simple`, as there is allready included the `LCD8448_Config.h` file.
 
 ### PlatformIO
 
@@ -31,7 +35,7 @@ lib_deps =
 
 ### Atmel Studio / Microchip Studio
 
-For the use of this Library, C++11 support needs to be enabled
+For the use of this Library, `C++11` support needs to be enabled
 
 ![Enable C++ Support](Docu/AtmelStudioProjectSettings.png)
 
