@@ -26,12 +26,21 @@
 
 // LCD PIN definition
 #if defined(ARDUINO) && ARDUINO >= 100  // SPI Interface --- (using Arduino Digital Pin 2,3,4,5,6)
-#define LCD_BL 7                        // Back light control
-#define SPI_SCK 6                       // CLK - Serial Clock(Master Output)
-#define SPI_MOSI 5                      // DI - Master Output,Slave Input
-#define LCD_DC 4                        // DC - Data/Command(command active low)
-#define SPI_CS 3                        // CE - Chip Select,Slave Transmit Enable(active low,Master Output)
-#define LCD_RST 2                       // Reset
+/*
+// PIN Definitions for SPI Interface --- using Arduino NOKIA LCD shield
+#define LCD_BL   7 // Backlight control (Arduino DIO Pin 7)
+#define SPI_SCK  2 // Serial Clock(Master Output)
+#define SPI_MOSI 3 // Master Output,Slave Input
+#define LCD_DC   4 // Data/Command(command active low)
+#define SPI_CS   5 // Chip Select,Slave Transmit Enable(active low,Master Output)
+#define LCD_RST  6 // Reset & Reset Button
+*/
+#define LCD_BL   7 // Back light control
+#define SPI_SCK  6 // CLK - Serial Clock(Master Output)
+#define SPI_MOSI 5 // DI - Master Output,Slave Input
+#define LCD_DC   4 // DC - Data/Command(command active low)
+#define SPI_CS   3 // CE - Chip Select,Slave Transmit Enable(active low,Master Output)
+#define LCD_RST  2 // Reset
 
 #else
 #define LCD_PORT PORTB

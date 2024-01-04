@@ -23,6 +23,7 @@
 #include "LCD8448_font_h.h"
 #include "LCD8448_symbols.h"
 
+// LCD Object definition
 LCD8448 lcd = LCD8448();
 
 #pragma region PUBLIC
