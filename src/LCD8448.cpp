@@ -547,6 +547,18 @@ void LCD8448::vd_antenna(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }
+
+void LCD8448::vd_sdCard(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
+    // Network symbol
+    unsigned char ch;
+    unsigned char *pSdCard;
+    pSdCard = (unsigned char *)sdCard;
+    // set_XY(0,5);
+    for (char i = 0; i < 7; i++) {
+        ch = pgm_read_byte(pSdCard + i + 7 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
 /**************************************************************************************/
 #pragma endregion SPECIAL DISPLAY METHODS
 /**************************************************************************************/

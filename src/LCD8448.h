@@ -374,6 +374,7 @@ class LCD8448 {
     void vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     void vd_network(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     void vd_antenna(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_sdCard(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     /**************************************************************************************/
 #pragma endregion SPECIAL DISPLAY METHODS
     /**************************************************************************************/
