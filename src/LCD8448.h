@@ -176,7 +176,7 @@ class LCD8448 {
         init(LCD8448::MODE_REGULAR);
     }
 
-    void init(LCD_Mode mode) {
+    void init(LCD_Mode initMode) {
 #if defined(ARDUINO) && ARDUINO >= 100
         pinMode(SPI_SCK, OUTPUT);
         pinMode(SPI_MOSI, OUTPUT);
@@ -229,7 +229,7 @@ class LCD8448 {
         clear();
         vd_clear();
 
-        mode(mode);
+        mode(initMode);
         chipDeSelect();
     }
 
