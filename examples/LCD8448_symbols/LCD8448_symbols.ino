@@ -16,6 +16,7 @@ LCD8448::LCD_Display _displayHighlight = LCD8448::NORMAL;
 
 // Storage for Runtime measuring for interval control
 unsigned long _millisPrevious;
+unsigned int counter = 0;
 
 void setup() {
   // Initialize digital pin LED_BUILTIN as an output.
@@ -35,20 +36,22 @@ void loop() {
     // Toggle LED Pin state
     _pinState = (_pinState == 0) ? 0x01 : 0x00;
 
+    // Clear the display
+    lcd.vd_clear();
     // Headline
-    lcd.write_string(0, 0, "LCD8448 Symbol", LCD8448::NORMAL);
+    lcd.vd_write_string(0, 0, "LCD8448 Symbol", LCD8448::NORMAL);
 
     // Symbols
-    for (int i = 0; i < 8; i++) {
-      lcd.vd_battery(10, 2, i, LCD8448::NORMAL);
-      lcd.vd_wireless(20, 2, i, LCD8448::NORMAL);
-    }
+    lcd.vd_battery(10, 2, counter % 11, LCD8448::NORMAL);
+    lcd.vd_wireless(20, 2, counter % 4, LCD8448::NORMAL);
 
-    for (int i = 0; i < 8; i++) {
-      lcd.vd_network(10, 3, i, LCD8448::NORMAL);
-      lcd.vd_antenna(20, 3, i, LCD8448::NORMAL);
-      lcd.vd_sdCard(30, 3, i, LCD8448::NORMAL);
-    }
+    lcd.vd_network(10, 3, counter % 3, LCD8448::NORMAL);
+    lcd.vd_antenna(20, 3, counter % 3, LCD8448::NORMAL);
+    lcd.vd_sdCard(30, 3, counter % 3, LCD8448::NORMAL);
+
+    lcd.vd_print();
+
+    counter++;
 
     // Store actull time counter
     _millisPrevious = millis();
