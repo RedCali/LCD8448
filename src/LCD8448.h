@@ -168,7 +168,8 @@ class LCD8448 {
 
 #pragma region GENERAL METHODS
     /**************************************************************************************/
-    LCD8448() {}
+    LCD8448() {
+    }
 
     ~LCD8448() {}
 
@@ -368,6 +369,7 @@ class LCD8448 {
     void vd_write_line(uint8_t X0, uint8_t Y0, uint8_t X1, uint8_t Y1);
     void vd_write_rect(uint8_t X0, uint8_t Y0, uint8_t a, uint8_t b);
     void vd_write_circle(uint8_t X0, uint8_t Y0, uint8_t radius);
+
 #pragma region SPECIAL DISPLAY METHODS
     /**************************************************************************************/
     void vd_write_framework(char *head, LCD_Display mode);
@@ -375,17 +377,31 @@ class LCD8448 {
     void vd_question(const char *question, uint8_t aktiv);
     void vd_overlayON(void);
     void vd_overlayOFF(void);
+    /**************************************************************************************/
+#pragma endregion SPECIAL DISPLAY METHODS
+
+#pragma region SPECIAL DISPLAY SYMBOL METHODS
+    /**************************************************************************************/
+    enum LCD_Symbols : uint8_t {
+        BATTERY,
+        WIRELESS,
+        NETWORK,
+        ANTENNA,
+        SD_CARD
+    };
+
+    void vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode, LCD_Symbols symbol);
     void vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     void vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     void vd_network(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     void vd_antenna(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     void vd_sdCard(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     /**************************************************************************************/
-#pragma endregion SPECIAL DISPLAY METHODS
+#pragma endregion SPECIAL DISPLAY SYMBOL METHODS
     /**************************************************************************************/
 #pragma endregion VIRTUAL DISPLAY METHODS
 #pragma endregion PUBLIC
 };
-extern LCD8448 lcd;
 
+extern LCD8448 lcd;
 #endif /* LCD8448_H_ */

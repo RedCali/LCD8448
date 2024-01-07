@@ -38,7 +38,7 @@ void LCD8448::clear(void) {
 
 void LCD8448::set_XY(uint8_t X, uint8_t Y) {
     writeCommand(SET_XY_COLUM_X | (X & SET_XY_COLUM_X_MASK));  // X / column
-    writeCommand(SET_XY_ROW_Y | (Y & SET_XY_ROW_Y_MASK));  // Y / row
+    writeCommand(SET_XY_ROW_Y | (Y & SET_XY_ROW_Y_MASK));      // Y / row
 }
 /**************************************************************************************/
 #pragma endregion GENERAL METHODS
@@ -397,12 +397,12 @@ void LCD8448::vd_write_framework(char *head, LCD_Display mode) {
         virtuelldisp[84 * i] = 0xff;
         virtuelldisp[83 + 84 * i] = 0xff;
     }
-    //vd_write_line(1, 0, 83, 0);
+    // vd_write_line(1, 0, 83, 0);
     vd_write_line(1, 47, 83, 47);
 
-    //	vd_battery(10,5,9,NORMAL);
-    //	vd_write_line(1,38,83,38);
-    //	vd_write_string(21,39,"22%",NORMAL);
+    // vd_battery(10,5,9,NORMAL);
+    // vd_write_line(1,38,83,38);
+    // vd_write_string(21,39,"22%",NORMAL);
 }
 
 void LCD8448::vd_alert(const char *text) {
@@ -464,6 +464,7 @@ void LCD8448::vd_question(const char *question, uint8_t aktiv) {
         virtuelldisp[i + 3 * 84] = 0xff;
         virtuelldisp[i + 4 * 84] = 0xff;
     }
+    
     for (uint16_t i = 72; i < ende; i++) {
         virtuelldisp[i + 3 * 84] = 0xff;
         virtuelldisp[i + 4 * 84] = 0xff;
@@ -499,13 +500,67 @@ void LCD8448::vd_overlayOFF(void) {
 
     draw_bmp_pixel(0, 0, virtuelldisp, 84, 48);
 }
+/**************************************************************************************/
+#pragma endregion SPECIAL DISPLAY METHODS
+
+#pragma region SPECIAL DISPLAY SYMBOL METHODS
+/**************************************************************************************/
+void LCD8448::vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode, LCD_Symbols symbol) {
+    // Battery symbol
+    unsigned char ch;
+    unsigned char *pSymbol;
+    uint8_t width;
+    // GEt symbol pointer
+    switch (symbol) {
+        case BATTERY: {
+            pSymbol = (unsigned char *)battery;
+            width = 8;
+            break;
+        }
+        case WIRELESS: {
+            pSymbol = (unsigned char *)wireless;
+            width = 8;
+            break;
+        }
+        case NETWORK: {
+            pSymbol = (unsigned char *)network;
+            width = 7;
+            break;
+        }
+        case ANTENNA: {
+            pSymbol = (unsigned char *)antenna;
+            width = 7;
+            break;
+        }
+        case SD_CARD: {
+            pSymbol = (unsigned char *)sdCard;
+            width = 7;
+            break;
+        }
+        default: {
+#ifdef LCD_DEBUGS
+#if defined(ARDUINO) && ARDUINO >= 100
+            Serial.print("Selected Symbol doesn't exist!\nSymbol Index: ");
+            Serial.println(mode);
+#endif
+#endif
+            return;
+            break;
+        }
+    }
+
+    // write symbol to VD Buffer
+    for (char i = 0; i < width; i++) {
+        ch = pgm_read_byte(pSymbol + i + width * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
 
 void LCD8448::vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Battery symbol
     unsigned char ch;
     unsigned char *pBatterie;
     pBatterie = (unsigned char *)battery;
-    // set_XY(0,5);
     for (char i = 0; i < 8; i++) {
         ch = pgm_read_byte(pBatterie + i + 8 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
@@ -517,7 +572,6 @@ void LCD8448::vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mod
     unsigned char ch;
     unsigned char *pWireless;
     pWireless = (unsigned char *)wireless;
-    // set_XY(0,5);
     for (char i = 0; i < 8; i++) {
         ch = pgm_read_byte(pWireless + i + 8 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
@@ -529,7 +583,6 @@ void LCD8448::vd_network(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode
     unsigned char ch;
     unsigned char *pNetwork;
     pNetwork = (unsigned char *)network;
-    // set_XY(0,5);
     for (char i = 0; i < 7; i++) {
         ch = pgm_read_byte(pNetwork + i + 7 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
@@ -541,7 +594,6 @@ void LCD8448::vd_antenna(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode
     unsigned char ch;
     unsigned char *pAntenna;
     pAntenna = (unsigned char *)antenna;
-    // set_XY(0,5);
     for (char i = 0; i < 7; i++) {
         ch = pgm_read_byte(pAntenna + i + 7 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
@@ -553,14 +605,13 @@ void LCD8448::vd_sdCard(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode)
     unsigned char ch;
     unsigned char *pSdCard;
     pSdCard = (unsigned char *)sdCard;
-    // set_XY(0,5);
     for (char i = 0; i < 7; i++) {
         ch = pgm_read_byte(pSdCard + i + 7 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }
 /**************************************************************************************/
-#pragma endregion SPECIAL DISPLAY METHODS
+#pragma endregion SPECIAL DISPLAY SYMBOL METHODS
 /**************************************************************************************/
 #pragma endregion VIRTUAL DISPLAY METHODS
 #pragma endregion PUBLIC
