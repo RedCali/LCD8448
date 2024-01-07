@@ -31,15 +31,14 @@ LCD8448 lcd = LCD8448();
 /**************************************************************************************/
 void LCD8448::clear(void) {
     writeCommand(0x0c);
-    writeCommand(0x80);
     set_XY(0, 0);
     for (int i = 0; i < 504; i++)  // 6*84
         writeData(0x00);
 }
 
 void LCD8448::set_XY(uint8_t X, uint8_t Y) {
-    writeCommand(0x80 | (X & 0x3F));  // X / row
-    writeCommand(0x40 | (Y & 0x07));  // Y / column
+    writeCommand(SET_XY_COLUM_X | (X & SET_XY_COLUM_X_MASK));  // X / column
+    writeCommand(SET_XY_ROW_Y | (Y & SET_XY_ROW_Y_MASK));  // Y / row
 }
 /**************************************************************************************/
 #pragma endregion GENERAL METHODS

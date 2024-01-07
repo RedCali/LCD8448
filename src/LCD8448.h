@@ -37,6 +37,11 @@
 #define COMMAND 0
 #define DATA 1
 
+#define SET_XY_COLUM_X 0x80
+#define SET_XY_COLUM_X_MASK 0x3f
+#define SET_XY_ROW_Y 0x40
+#define SET_XY_ROW_Y_MASK 0x07
+
 class LCD8448 {
    private:
 #pragma region PRIVATE
@@ -171,7 +176,7 @@ class LCD8448 {
         init(LCD8448::MODE_REGULAR);
     }
 
-    void init(LCD_Mode _mode) {
+    void init(LCD_Mode mode) {
 #if defined(ARDUINO) && ARDUINO >= 100
         pinMode(SPI_SCK, OUTPUT);
         pinMode(SPI_MOSI, OUTPUT);
@@ -224,7 +229,7 @@ class LCD8448 {
         clear();
         vd_clear();
 
-        mode(_mode);
+        mode(mode);
         chipDeSelect();
     }
 
