@@ -38,8 +38,8 @@ void LCD8448::clear(void) {
 }
 
 void LCD8448::set_XY(uint8_t X, uint8_t Y) {
-    writeCommand(0x40 | (Y & 0x07));  // column
-    writeCommand(0x80 | (X & 0x3F));  // row
+    writeCommand(0x80 | (X & 0x3F));  // X / row
+    writeCommand(0x40 | (Y & 0x07));  // Y / column
 }
 /**************************************************************************************/
 #pragma endregion GENERAL METHODS
@@ -398,6 +398,7 @@ void LCD8448::vd_write_framework(char *head, LCD_Display mode) {
         virtuelldisp[84 * i] = 0xff;
         virtuelldisp[83 + 84 * i] = 0xff;
     }
+    //vd_write_line(1, 0, 83, 0);
     vd_write_line(1, 47, 83, 47);
 
     //	vd_battery(10,5,9,NORMAL);

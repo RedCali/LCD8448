@@ -13,12 +13,13 @@ unsigned char _pinState = 0x00;
 // Diaplay Variables
 // Text Backfound definition
 LCD8448::LCD_Display _displayHighlight = LCD8448::NORMAL;
-
 // Storage for Runtime measuring for interval control
 unsigned long _millisPrevious;
-unsigned int counter = 0;
+unsigned int _counter = 0;
 
 void setup() {
+  // Init Serial interface
+  Serial.begin(115200);
   // Initialize digital pin LED_BUILTIN as an output.
   pinMode(LED_PIN, OUTPUT);
   // Init LCD Display
@@ -39,21 +40,24 @@ void loop() {
     // Clear the display
     lcd.vd_clear();
     // Headline
-    lcd.vd_write_string(0, 0, "LCD8448 Symbol", LCD8448::NORMAL);
+    //lcd.vd_write_string(0, 0, "LCD8448 Symbol", LCD8448::NORMAL);
+    lcd.vd_write_framework("LCD8448 Symbol", _displayHighlight);
 
     // Symbols
-    lcd.vd_battery(10, 2, counter % 11, LCD8448::NORMAL);
-    lcd.vd_wireless(20, 2, counter % 4, LCD8448::NORMAL);
+    lcd.vd_battery(10, 2, _counter % 11, LCD8448::NORMAL);
+    lcd.vd_wireless(20, 2, _counter % 4, LCD8448::NORMAL);
 
-    lcd.vd_network(10, 3, counter % 3, LCD8448::NORMAL);
-    lcd.vd_antenna(20, 3, counter % 3, LCD8448::NORMAL);
-    lcd.vd_sdCard(30, 3, counter % 3, LCD8448::NORMAL);
+    lcd.vd_network(10, 3, _counter % 3, LCD8448::NORMAL);
+    lcd.vd_antenna(20, 3, _counter % 4, LCD8448::NORMAL);
+    lcd.vd_sdCard(30, 3, _counter % 3, LCD8448::NORMAL);
 
+    // Print the display contents
     lcd.vd_print();
 
-    counter++;
+    _counter++;
+    _displayHighlight = (_displayHighlight == LCD8448::NORMAL) ? LCD8448::INVERTED : LCD8448::NORMAL;
 
-    // Store actull time counter
+    // Store actull time _
     _millisPrevious = millis();
   }
 }
