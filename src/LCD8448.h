@@ -45,8 +45,8 @@
 class LCD8448 {
    private:
 #pragma region PRIVATE
-    unsigned char virtuelldisp[504];
-    unsigned char virtuelldisp_temp[504];
+    unsigned char virtualDisplay[504];
+    unsigned char virtualDisplayTemp[504];
 
 #pragma region INTERNAL METHODS
     inline void chipSelect() {
@@ -335,7 +335,7 @@ class LCD8448 {
 #pragma region DIRECT DISPLAY METHODS
     /**************************************************************************************/
     void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map);
-    void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map, uint8_t Pix_x, uint8_t Pix_y);
+    void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map, uint8_t pixelsWidth, uint8_t pixelHeight);
     void draw_bmp_pixel_P(uint8_t X, uint8_t Y, const unsigned char *map);
     void write_char(unsigned char c, LCD_Display mode);
     void write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode);
@@ -346,7 +346,7 @@ class LCD8448 {
 
 #pragma region SPECIAL DISPLAY METHODS
     /**************************************************************************************/
-    void write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t ch_with, uint8_t num, uint8_t line, uint8_t row);
+    void write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t charWith, uint8_t num, uint8_t line, uint8_t row);
     unsigned char prop_write_char(char c, LCD_Display mode);
     void prop_write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode);
     /*************************************************************************************/
@@ -374,7 +374,7 @@ class LCD8448 {
     /**************************************************************************************/
     void vd_write_framework(char *head, LCD_Display mode);
     void vd_alert(const char *text);
-    void vd_question(const char *question, uint8_t aktiv);
+    void vd_question(const char *question, uint8_t active);
     void vd_overlayON(void);
     void vd_overlayOFF(void);
     /**************************************************************************************/
