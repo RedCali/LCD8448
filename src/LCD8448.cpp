@@ -37,6 +37,14 @@ void LCD8448::clear(void) {
 }
 
 void LCD8448::set_XY(uint8_t X, uint8_t Y) {
+#ifdef LCD_DEBUG
+#ifdef ARDUINO && ARDUINO >= 100
+    Serial.print("LCD Set X: ");
+    Serial.print(X);
+    Serial.print(" / Y: ");
+    Serial.println(Y);
+#endif
+#endif
     writeCommand(SET_XY_COLUM_X | (X & SET_XY_COLUM_X_MASK));  // X / column
     writeCommand(SET_XY_ROW_Y | (Y & SET_XY_ROW_Y_MASK));      // Y / row
 }
@@ -87,10 +95,12 @@ void LCD8448::write_char(unsigned char c, LCD_Display mode) {
     }
 }
 
-void LCD8448::write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode) {    
+void LCD8448::write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode) {
+#ifdef LCD_DEBUG
 #if defined(ARDUINO) && ARDUINO >= 100
-        Serial.print("LCD writeString:  ");
+        Serial.print("LCD writeString: ");
         Serial.println(str);
+#endif
 #endif
 
     set_XY(X, Y);

@@ -19,13 +19,13 @@
 #define LCD8448_CONFIG_H_
 
 // Commend / uncommend the define for Debugging
-//#define LCD_DEBUG
+#define LCD_DEBUG
 
 // Define here if backlight signal is inverted
-//#define BACKLIGHT_INVERTED
+#define BACKLIGHT_INVERTED
 
 // Define if the Arduino LCD Shield is used
-#define LCD_SHIELD
+//#define LCD_SHIELD
 
 // LCD PIN definition
 #ifdef ARDUINO && ARDUINO >= 100  // SPI Interface --- (using Arduino Digital Pins)
