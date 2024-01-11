@@ -24,9 +24,12 @@
 // Define here if backlight signal is inverted
 //#define BACKLIGHT_INVERTED
 
+// Define if the Arduino LCD Shield is used
+#define LCD_SHIELD
+
 // LCD PIN definition
-#if defined(ARDUINO) && ARDUINO >= 100  // SPI Interface --- (using Arduino Digital Pins)
-/*
+#ifdef ARDUINO && ARDUINO >= 100  // SPI Interface --- (using Arduino Digital Pins)
+#ifdef LCD_SHIELD
 // PIN Definitions for SPI Interface --- using Arduino NOKIA LCD shield
 #define LCD_BL   7 // Backlight control (Arduino DIO Pin 7)
 #define SPI_SCK  2 // Serial Clock(Master Output)
@@ -34,13 +37,14 @@
 #define LCD_DC   4 // Data/Command(command active low)
 #define SPI_CS   5 // Chip Select,Slave Transmit Enable(active low,Master Output)
 #define LCD_RST  6 // Reset & Reset Button
-*/
+#else
 #define LCD_BL   7 // Back light control
 #define SPI_SCK  6 // CLK - Serial Clock(Master Output)
 #define SPI_MOSI 5 // DI - Master Output,Slave Input
 #define LCD_DC   4 // DC - Data/Command(command active low)
 #define SPI_CS   3 // CE - Chip Select,Slave Transmit Enable(active low,Master Output)
 #define LCD_RST  2 // Reset
+#endif
 
 #else
 #define LCD_PORT PORTB
