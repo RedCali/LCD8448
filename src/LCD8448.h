@@ -179,6 +179,21 @@ class LCD8448 {
 
     void init(LCD_Mode initMode) {
 #if defined(ARDUINO) && ARDUINO >= 100
+#ifdef LCD_DEBUG
+        Serial.print("LCD PINS --> SPI SCK: ");
+        Serial.print(SPI_SCK);
+        Serial.print(" / SPI MOSI: ");
+        Serial.print(SPI_MOSI);
+        Serial.print(" / SPI CS: ");
+        Serial.print(SPI_CS);
+        Serial.print(" / SPI DC: ");
+        Serial.print(LCD_DC);
+        Serial.print(" / SPI RST: ");
+        Serial.print(LCD_RST);
+        Serial.print(" / SPI BL: ");
+        Serial.println(LCD_BL);
+
+#endif
         pinMode(SPI_SCK, OUTPUT);
         pinMode(SPI_MOSI, OUTPUT);
         pinMode(SPI_CS, OUTPUT);
@@ -319,7 +334,7 @@ class LCD8448 {
     inline void mode(LCD_Mode mode) {
 #ifdef LCD_DEBUG
 #if defined(ARDUINO) && ARDUINO >= 100
-        Serial.print("Selected Display mode: ");
+        Serial.print("LCD MODE --> Selected mode: ");
         Serial.println(mode, HEX);
 #endif
 #endif

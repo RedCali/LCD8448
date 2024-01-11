@@ -87,7 +87,12 @@ void LCD8448::write_char(unsigned char c, LCD_Display mode) {
     }
 }
 
-void LCD8448::write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode) {
+void LCD8448::write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode) {    
+#if defined(ARDUINO) && ARDUINO >= 100
+        Serial.print("LCD writeString:  ");
+        Serial.println(str);
+#endif
+
     set_XY(X, Y);
     while (*str) {
         write_char(*str, mode);
