@@ -12,6 +12,8 @@ LCD_RST  6 // Reset & Reset Button
 
 // Define the update rate of the display and the LED
 #define UPDATE_INTERVAL 500
+// Baude rate of the serial interface
+#define SERIAL_BAUD 115200
 
 // LED Definitions
 #define LED_PIN 13
@@ -29,6 +31,8 @@ char _bufferCounter[15];
 unsigned long _millisPrevious;
 
 void setup() {
+  // Init Serial interface
+  Serial.begin(SERIAL_BAUD);
   // Initialize digital pin LED_BUILTIN as an output.
   pinMode(LED_PIN, OUTPUT);
   // Init LCD Display
@@ -37,7 +41,7 @@ void setup() {
   // Write constant strings into the display
   lcd.write_string(1 * 6 + 3, 0, "Hello", LCD8448::NORMAL);
   lcd.write_string(8 * 6 - 3, 0, "World", LCD8448::INVERTED);
-// Switch on the Backlight of the LCD
+  // Switch on the Backlight of the LCD
   lcd.setBacklightON();
 }
 
