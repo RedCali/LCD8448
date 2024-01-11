@@ -178,8 +178,8 @@ class LCD8448 {
     }
 
     void init(LCD_Mode initMode) {
-#if defined(ARDUINO) && ARDUINO >= 100
 #ifdef LCD_DEBUG
+#if defined(ARDUINO) && ARDUINO >= 100
         Serial.print("LCD PINS --> SPI SCK: ");
         Serial.print(SPI_SCK);
         Serial.print(" / SPI MOSI: ");
