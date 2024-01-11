@@ -37,11 +37,16 @@
 #define COMMAND 0
 #define DATA 1
 
+#define SET_XY_COLUM_X 0x80
+#define SET_XY_COLUM_X_MASK 0x3f
+#define SET_XY_ROW_Y 0x40
+#define SET_XY_ROW_Y_MASK 0x07
+
 class LCD8448 {
    private:
 #pragma region PRIVATE
-    unsigned char virtuelldisp[504];
-    unsigned char virtuelldisp_temp[504];
+    unsigned char virtualDisplay[504];
+    unsigned char virtualDisplayTemp[504];
 
 #pragma region INTERNAL METHODS
     inline void chipSelect() {
@@ -163,7 +168,8 @@ class LCD8448 {
 
 #pragma region GENERAL METHODS
     /**************************************************************************************/
-    LCD8448() {}
+    LCD8448() {
+    }
 
     ~LCD8448() {}
 
@@ -171,7 +177,7 @@ class LCD8448 {
         init(LCD8448::MODE_REGULAR);
     }
 
-    void init(LCD_Mode _mode) {
+    void init(LCD_Mode initMode) {
 #if defined(ARDUINO) && ARDUINO >= 100
         pinMode(SPI_SCK, OUTPUT);
         pinMode(SPI_MOSI, OUTPUT);
@@ -224,7 +230,7 @@ class LCD8448 {
         clear();
         vd_clear();
 
-        mode(_mode);
+        mode(initMode);
         chipDeSelect();
     }
 
@@ -329,7 +335,7 @@ class LCD8448 {
 #pragma region DIRECT DISPLAY METHODS
     /**************************************************************************************/
     void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map);
-    void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map, uint8_t Pix_x, uint8_t Pix_y);
+    void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map, uint8_t pixelsWidth, uint8_t pixelHeight);
     void draw_bmp_pixel_P(uint8_t X, uint8_t Y, const unsigned char *map);
     void write_char(unsigned char c, LCD_Display mode);
     void write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode);
@@ -340,7 +346,7 @@ class LCD8448 {
 
 #pragma region SPECIAL DISPLAY METHODS
     /**************************************************************************************/
-    void write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t ch_with, uint8_t num, uint8_t line, uint8_t row);
+    void write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t charWith, uint8_t num, uint8_t line, uint8_t row);
     unsigned char prop_write_char(char c, LCD_Display mode);
     void prop_write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode);
     /*************************************************************************************/
@@ -363,24 +369,39 @@ class LCD8448 {
     void vd_write_line(uint8_t X0, uint8_t Y0, uint8_t X1, uint8_t Y1);
     void vd_write_rect(uint8_t X0, uint8_t Y0, uint8_t a, uint8_t b);
     void vd_write_circle(uint8_t X0, uint8_t Y0, uint8_t radius);
+
 #pragma region SPECIAL DISPLAY METHODS
     /**************************************************************************************/
     void vd_write_framework(char *head, LCD_Display mode);
     void vd_alert(const char *text);
-    void vd_question(const char *question, uint8_t aktiv);
+    void vd_question(const char *question, uint8_t active);
     void vd_overlayON(void);
     void vd_overlayOFF(void);
+    /**************************************************************************************/
+#pragma endregion SPECIAL DISPLAY METHODS
+
+#pragma region SPECIAL DISPLAY SYMBOL METHODS
+    /**************************************************************************************/
+    enum LCD_Symbols : uint8_t {
+        BATTERY,
+        WIRELESS,
+        NETWORK,
+        ANTENNA,
+        SD_CARD
+    };
+
+    void vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode, LCD_Symbols symbol);
     void vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     void vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     void vd_network(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     void vd_antenna(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     void vd_sdCard(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     /**************************************************************************************/
-#pragma endregion SPECIAL DISPLAY METHODS
+#pragma endregion SPECIAL DISPLAY SYMBOL METHODS
     /**************************************************************************************/
 #pragma endregion VIRTUAL DISPLAY METHODS
 #pragma endregion PUBLIC
 };
-extern LCD8448 lcd;
 
+extern LCD8448 lcd;
 #endif /* LCD8448_H_ */
