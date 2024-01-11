@@ -1,0 +1,39 @@
+#######################################
+# Syntax Coloring Map LCD8448
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+MODE_BLANK		KEYWORD1
+MODE_ALL_ON		KEYWORD1
+MODE_REGULAR	KEYWORD1
+MODE_INVERTED	KEYWORD1
+NORMAL			KEYWORD1
+INVERTED		KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+doSomething KEYWORD2
+
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+LCD8448    KEYWORD2
+
+
+#######################################
+# Structures (KEYWORD3)
+#######################################
+LCD_Mode	KEYWORD3
+LCD_Display	KEYWORD3
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+COMMAND	LITERAL1
+DATA	LITERAL1
+
