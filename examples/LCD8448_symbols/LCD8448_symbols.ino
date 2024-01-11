@@ -1,7 +1,14 @@
-// Include LCD definitions - Overwrite the Library LCD Config File
-#include "LCD8448_Config.h"
 // Include LCD Library
 #include <LCD8448.h>
+/*
+// PIN Definitions for SPI Interface --- using Arduino NOKIA LCD shield
+LCD_BL   7 // Backlight control (Arduino DIO Pin 7)
+SPI_SCK  2 // Serial Clock(Master Output)
+SPI_MOSI 3 // Master Output,Slave Input
+LCD_DC   4 // Data/Command(command active low)
+SPI_CS   5 // Chip Select,Slave Transmit Enable(active low,Master Output)
+LCD_RST  6 // Reset & Reset Button
+*/
 
 // Define the update rate of the display and the LED
 #define UPDATE_INTERVAL 500
