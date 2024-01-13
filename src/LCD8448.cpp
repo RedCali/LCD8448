@@ -665,8 +665,8 @@ void LCD8448::vd_antennaStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Dis
     unsigned char ch;
     unsigned char *pImages;
     pImages = (unsigned char *)antennaStrength1;
-    for (char i = 0; i < 8; i++) {
-        ch = pgm_read_byte(pImages + i + 8 * state);
+    for (char i = 0; i < 18; i++) {
+        ch = pgm_read_byte(pImages + i + 18 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }
@@ -676,8 +676,8 @@ void LCD8448::vd_antennaStrength2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Dis
     unsigned char ch;
     unsigned char *pImages;
     pImages = (unsigned char *)antennaStrength2;
-    for (char i = 0; i < 8; i++) {
-        ch = pgm_read_byte(pImages + i + 8 * state);
+    for (char i = 0; i < 12; i++) {
+        ch = pgm_read_byte(pImages + i + 12 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }
@@ -687,8 +687,8 @@ void LCD8448::vd_arrowUpDown(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display 
     unsigned char ch;
     unsigned char *pImages;
     pImages = (unsigned char *)arrowUpDown;
-    for (char i = 0; i < 8; i++) {
-        ch = pgm_read_byte(pImages + i + 8 * state);
+    for (char i = 0; i < 12; i++) {
+        ch = pgm_read_byte(pImages + i + 12 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }
@@ -698,8 +698,8 @@ void LCD8448::vd_barGraph(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mod
     unsigned char ch;
     unsigned char *pImages;
     pImages = (unsigned char *)barGraph;
-    for (char i = 0; i < 8; i++) {
-        ch = pgm_read_byte(pImages + i + 8 * state);
+    for (char i = 0; i < 5; i++) {
+        ch = pgm_read_byte(pImages + i + 5 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }
@@ -720,8 +720,8 @@ void LCD8448::vd_bluetooth(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mo
     unsigned char ch;
     unsigned char *pImages;
     pImages = (unsigned char *)bluetooth;
-    for (char i = 0; i < 8; i++) {
-        ch = pgm_read_byte(pImages + i + 8 * state);
+    for (char i = 0; i < 6; i++) {
+        ch = pgm_read_byte(pImages + i);// + 8 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }
@@ -731,8 +731,8 @@ void LCD8448::vd_envelope(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mod
     unsigned char ch;
     unsigned char *pImages;
     pImages = (unsigned char *)envelope;
-    for (char i = 0; i < 8; i++) {
-        ch = pgm_read_byte(pImages + i + 8 * state);
+    for (char i = 0; i < 12; i++) {
+        ch = pgm_read_byte(pImages + i + 12 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }
@@ -764,8 +764,8 @@ void LCD8448::vd_signalStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Disp
     unsigned char ch;
     unsigned char *pImages;
     pImages = (unsigned char *)signalStrength1;
-    for (char i = 0; i < 7; i++) {
-        ch = pgm_read_byte(pImages + i + 7 * state);
+    for (char i = 0; i < 13; i++) {
+        ch = pgm_read_byte(pImages + i + 13 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }
