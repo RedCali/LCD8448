@@ -38,7 +38,7 @@ void LCD8448::clear(void) {
 
 void LCD8448::set_XY(uint8_t X, uint8_t Y) {
 #ifdef LCD_DEBUG
-#ifdef ARDUINO && ARDUINO >= 100
+#ifdef ARDUINO &&ARDUINO >= 100
     Serial.print("LCD Set X: ");
     Serial.print(X);
     Serial.print(" / Y: ");
@@ -98,8 +98,8 @@ void LCD8448::write_char(unsigned char c, LCD_Display mode) {
 void LCD8448::write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode) {
 #ifdef LCD_DEBUG
 #if defined(ARDUINO) && ARDUINO >= 100
-        Serial.print("LCD writeString: ");
-        Serial.println(str);
+    Serial.print("LCD writeString: ");
+    Serial.println(str);
 #endif
 #endif
 
@@ -549,13 +549,48 @@ void LCD8448::vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode,
     uint8_t width;
     // GEt symbol pointer
     switch (symbol) {
+        case ANTENNA_1: {
+            pSymbol = (unsigned char *)antenna1;
+            width = 7;
+            break;
+        }
+        case ANTENNA_2: {
+            pSymbol = (unsigned char *)antenna2;
+            width = 7;
+            break;
+        }
+        case ANTENNA_STRENGTH_1: {
+            pSymbol = (unsigned char *)antennaStrength1;
+            width = 7;
+            break;
+        }
+        case ANTENNA_STRENGTH_2: {
+            pSymbol = (unsigned char *)antennaStrength2;
+            width = 7;
+            break;
+        }
+        case ARROW_UP_DOWN: {
+            pSymbol = (unsigned char *)arrowUpDown;
+            width = 7;
+            break;
+        }
+        case BAR_GRAPH: {
+            pSymbol = (unsigned char *)barGraph;
+            width = 7;
+            break;
+        }
         case BATTERY: {
             pSymbol = (unsigned char *)battery;
             width = 8;
             break;
         }
-        case WIRELESS: {
-            pSymbol = (unsigned char *)wireless;
+        case BLUETHOOTH: {
+            pSymbol = (unsigned char *)bluetooth;
+            width = 8;
+            break;
+        }
+        case ENVELOPE: {
+            pSymbol = (unsigned char *)envelope;
             width = 8;
             break;
         }
@@ -564,14 +599,24 @@ void LCD8448::vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode,
             width = 7;
             break;
         }
-        case ANTENNA: {
-            pSymbol = (unsigned char *)antenna;
-            width = 7;
-            break;
-        }
         case SD_CARD: {
             pSymbol = (unsigned char *)sdCard;
             width = 7;
+            break;
+        }
+        case SIGNAL_STRENGTH_1: {
+            pSymbol = (unsigned char *)signalStrength1;
+            width = 7;
+            break;
+        }
+        case SIGNAL_STRENGTH_2: {
+            pSymbol = (unsigned char *)signalStrength2;
+            width = 7;
+            break;
+        }
+        case WIRELESS: {
+            pSymbol = (unsigned char *)wireless;
+            width = 8;
             break;
         }
         default: {
@@ -593,24 +638,101 @@ void LCD8448::vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode,
     }
 }
 
-void LCD8448::vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
-    // Battery symbol
+void LCD8448::vd_antenna1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
+    // Network symbol
     unsigned char ch;
-    unsigned char *pBatterie;
-    pBatterie = (unsigned char *)battery;
-    for (char i = 0; i < 8; i++) {
-        ch = pgm_read_byte(pBatterie + i + 8 * state);
+    unsigned char *pImages;
+    pImages = (unsigned char *)antenna1;
+    for (char i = 0; i < 7; i++) {
+        ch = pgm_read_byte(pImages + i + 7 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }
 
-void LCD8448::vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
+void LCD8448::vd_antenna2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Network symbol
     unsigned char ch;
-    unsigned char *pWireless;
-    pWireless = (unsigned char *)wireless;
+    unsigned char *pImages;
+    pImages = (unsigned char *)antenna2;
+    for (char i = 0; i < 7; i++) {
+        ch = pgm_read_byte(pImages + i + 7 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
+
+void LCD8448::vd_antennaStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
+    // Battery symbol
+    unsigned char ch;
+    unsigned char *pImages;
+    pImages = (unsigned char *)antennaStrength1;
     for (char i = 0; i < 8; i++) {
-        ch = pgm_read_byte(pWireless + i + 8 * state);
+        ch = pgm_read_byte(pImages + i + 8 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
+
+void LCD8448::vd_antennaStrength2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
+    // Battery symbol
+    unsigned char ch;
+    unsigned char *pImages;
+    pImages = (unsigned char *)antennaStrength2;
+    for (char i = 0; i < 8; i++) {
+        ch = pgm_read_byte(pImages + i + 8 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
+
+void LCD8448::vd_arrowUpDown(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
+    // Battery symbol
+    unsigned char ch;
+    unsigned char *pImages;
+    pImages = (unsigned char *)arrowUpDown;
+    for (char i = 0; i < 8; i++) {
+        ch = pgm_read_byte(pImages + i + 8 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
+
+void LCD8448::vd_barGraph(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
+    // Battery symbol
+    unsigned char ch;
+    unsigned char *pImages;
+    pImages = (unsigned char *)barGraph;
+    for (char i = 0; i < 8; i++) {
+        ch = pgm_read_byte(pImages + i + 8 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
+
+void LCD8448::vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
+    // Battery symbol
+    unsigned char ch;
+    unsigned char *pImages;
+    pImages = (unsigned char *)battery;
+    for (char i = 0; i < 8; i++) {
+        ch = pgm_read_byte(pImages + i + 8 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
+
+void LCD8448::vd_bluetooth(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
+    // Battery symbol
+    unsigned char ch;
+    unsigned char *pImages;
+    pImages = (unsigned char *)bluetooth;
+    for (char i = 0; i < 8; i++) {
+        ch = pgm_read_byte(pImages + i + 8 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
+
+void LCD8448::vd_envelope(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
+    // Battery symbol
+    unsigned char ch;
+    unsigned char *pImages;
+    pImages = (unsigned char *)envelope;
+    for (char i = 0; i < 8; i++) {
+        ch = pgm_read_byte(pImages + i + 8 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }
@@ -618,21 +740,10 @@ void LCD8448::vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mod
 void LCD8448::vd_network(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Network symbol
     unsigned char ch;
-    unsigned char *pNetwork;
-    pNetwork = (unsigned char *)network;
+    unsigned char *pImages;
+    pImages = (unsigned char *)network;
     for (char i = 0; i < 7; i++) {
-        ch = pgm_read_byte(pNetwork + i + 7 * state);
-        vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
-    }
-}
-
-void LCD8448::vd_antenna(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
-    // Network symbol
-    unsigned char ch;
-    unsigned char *pAntenna;
-    pAntenna = (unsigned char *)antenna;
-    for (char i = 0; i < 7; i++) {
-        ch = pgm_read_byte(pAntenna + i + 7 * state);
+        ch = pgm_read_byte(pImages + i + 7 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }
@@ -640,10 +751,43 @@ void LCD8448::vd_antenna(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode
 void LCD8448::vd_sdCard(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Network symbol
     unsigned char ch;
-    unsigned char *pSdCard;
-    pSdCard = (unsigned char *)sdCard;
+    unsigned char *pImages;
+    pImages = (unsigned char *)sdCard;
     for (char i = 0; i < 7; i++) {
-        ch = pgm_read_byte(pSdCard + i + 7 * state);
+        ch = pgm_read_byte(pImages + i + 7 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
+
+void LCD8448::vd_signalStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
+    // Network symbol
+    unsigned char ch;
+    unsigned char *pImages;
+    pImages = (unsigned char *)signalStrength1;
+    for (char i = 0; i < 7; i++) {
+        ch = pgm_read_byte(pImages + i + 7 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
+
+void LCD8448::vd_signalStrength2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
+    // Network symbol
+    unsigned char ch;
+    unsigned char *pImages;
+    pImages = (unsigned char *)signalStrength2;
+    for (char i = 0; i < 7; i++) {
+        ch = pgm_read_byte(pImages + i + 7 * state);
+        vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
+    }
+}
+
+void LCD8448::vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
+    // Network symbol
+    unsigned char ch;
+    unsigned char *pImages;
+    pImages = (unsigned char *)wireless;
+    for (char i = 0; i < 8; i++) {
+        ch = pgm_read_byte(pImages + i + 8 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }

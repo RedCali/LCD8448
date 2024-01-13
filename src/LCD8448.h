@@ -398,19 +398,38 @@ class LCD8448 {
 #pragma region SPECIAL DISPLAY SYMBOL METHODS
     /**************************************************************************************/
     enum LCD_Symbols : uint8_t {
+        ANTENNA_1,
+        ANTENNA_2,
+        ANTENNA_STRENGTH_1,
+        ANTENNA_STRENGTH_2,
+        ARROW_UP_DOWN,
+        BAR_GRAPH,
         BATTERY,
-        WIRELESS,
+        BLUETHOOTH,
+        ENVELOPE,
         NETWORK,
-        ANTENNA,
-        SD_CARD
+        SD_CARD,
+        SIGNAL_STRENGTH_1,
+        SIGNAL_STRENGTH_2,
+        WIRELESS
     };
 
     void vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode, LCD_Symbols symbol);
+
+    void vd_antenna1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_antenna2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_antennaStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_antennaStrength2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_arrowUpDown(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_barGraph(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     void vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
-    void vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_bluetooth(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_envelope(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     void vd_network(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
-    void vd_antenna(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     void vd_sdCard(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_signalStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_signalStrength2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
+    void vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode);
     /**************************************************************************************/
 #pragma endregion SPECIAL DISPLAY SYMBOL METHODS
     /**************************************************************************************/
