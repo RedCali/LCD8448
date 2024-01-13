@@ -53,12 +53,22 @@ void loop() {
     lcd.vd_write_framework("LCD8448 Symbol", _displayHighlight);
 
     // Symbols
-    lcd.vd_battery(10, 2, _counter % 11, LCD8448::NORMAL);
-    lcd.vd_wireless(20, 2, _counter % 4, LCD8448::NORMAL);
+    lcd.vd_antenna1(10, 2, _counter % 4, LCD8448::NORMAL);
+    lcd.vd_antenna2(20, 2, _counter % 2, LCD8448::NORMAL);
+    lcd.vd_antennaStrength1(30, 2, _counter % 8, LCD8448::NORMAL);
+    lcd.vd_antennaStrength2(50, 2, _counter % 5, LCD8448::NORMAL);
+    lcd.vd_arrowUpDown(70, 2, _counter % 3, LCD8448::NORMAL);
 
-    lcd.vd_network(10, 3, _counter % 3, LCD8448::NORMAL);
-    lcd.vd_antenna(20, 3, _counter % 4, LCD8448::NORMAL);
-    lcd.vd_sdCard(30, 3, _counter % 3, LCD8448::NORMAL);
+    lcd.vd_battery(10, 3, _counter % 11, LCD8448::NORMAL);
+    lcd.vd_barGraph(20, 3, _counter % 9, LCD8448::NORMAL);
+    lcd.vd_bluetooth(30, 3, 1, LCD8448::NORMAL);
+    lcd.vd_envelope(40, 3, _counter % 2, LCD8448::NORMAL);
+    lcd.vd_network(60, 3, _counter % 3, LCD8448::NORMAL);
+
+    lcd.vd_sdCard(10, 4, _counter % 3, LCD8448::NORMAL);
+    lcd.vd_signalStrength1(30, 4, _counter % 8, LCD8448::NORMAL);
+    lcd.vd_signalStrength2(50, 4, _counter % 5, LCD8448::NORMAL);
+    lcd.vd_wireless(70, 4, _counter % 4, LCD8448::NORMAL);
 
     // Print the display contents
     lcd.vd_print();
