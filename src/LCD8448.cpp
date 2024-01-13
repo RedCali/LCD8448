@@ -51,7 +51,7 @@ void LCD8448::set_XY(uint8_t X, uint8_t Y) {
 /**************************************************************************************/
 #pragma endregion GENERAL METHODS
 
-#pragma region DIRECT DISPLAY METHODS
+#pragma region DIRECT METHODS
 /**************************************************************************************/
 void LCD8448::draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map) {
     draw_bmp_pixel(X, Y, map, 84, 48);
@@ -149,9 +149,9 @@ void LCD8448::write_string_big(uint8_t X, uint8_t Y, const char *str, LCD_Displa
     }
 }
 /**************************************************************************************/
-#pragma endregion DIRECT DISPLAY METHODS
+#pragma endregion DIRECT METHODS
 
-#pragma region SPECIAL DISPLAY METHODS
+#pragma region SPECIAL METHODS
 /**************************************************************************************/
 void LCD8448::write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t charWith, uint8_t num, uint8_t line, uint8_t row) {
     unsigned char i, n;
@@ -243,9 +243,9 @@ void LCD8448::write_number_big2(uint8_t X, uint8_t Y, uint8_t number) {
     }
 }
 /*************************************************************************************/
-#pragma endregion SPECIAL DISPLAY METHODS
+#pragma endregion SPECIAL METHODS
 
-#pragma region VIRTUAL DISPLAY METHODS
+#pragma region VIRTUAL LCD METHODS
 /**************************************************************************************/
 /*additional drawing functionality*/
 void LCD8448::vd_clear(void) {
@@ -406,7 +406,7 @@ void LCD8448::vd_write_circle(uint8_t X0, uint8_t Y0, uint8_t radius) {
     }
 }
 
-#pragma region SPECIAL DISPLAY METHODS
+#pragma region SPECIAL METHODS
 /*************************************************************************************/
 void LCD8448::vd_write_framework(char *head, LCD_Display mode) {
     // head in center position
@@ -538,9 +538,9 @@ void LCD8448::vd_overlayOFF(void) {
     draw_bmp_pixel(0, 0, virtualDisplay, 84, 48);
 }
 /**************************************************************************************/
-#pragma endregion SPECIAL DISPLAY METHODS
+#pragma endregion SPECIAL METHODS
 
-#pragma region SPECIAL DISPLAY SYMBOL METHODS
+#pragma region SPECIAL SYMBOL METHODS
 /**************************************************************************************/
 void LCD8448::vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode, LCD_Symbols symbol) {
     // Battery symbol
@@ -792,7 +792,7 @@ void LCD8448::vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mod
     }
 }
 /**************************************************************************************/
-#pragma endregion SPECIAL DISPLAY SYMBOL METHODS
+#pragma endregion SPECIAL SYMBOL METHODS
 /**************************************************************************************/
-#pragma endregion VIRTUAL DISPLAY METHODS
+#pragma endregion VIRTUAL LCD METHODS
 #pragma endregion PUBLIC

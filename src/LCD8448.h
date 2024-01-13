@@ -347,7 +347,7 @@ class LCD8448 {
     /**************************************************************************************/
 #pragma endregion GENERAL METHODS
 
-#pragma region DIRECT DISPLAY METHODS
+#pragma region DIRECT METHODS
     /**************************************************************************************/
     void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map);
     void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map, uint8_t pixelsWidth, uint8_t pixelHeight);
@@ -357,9 +357,9 @@ class LCD8448 {
     void write_char_big(uint8_t X, uint8_t Y, unsigned char c, LCD_Display mode);
     void write_string_big(uint8_t X, uint8_t Y, const char *str, LCD_Display mode);
     /**************************************************************************************/
-#pragma endregion DIRECT DISPLAY METHODS
+#pragma endregion DIRECT METHODS
 
-#pragma region SPECIAL DISPLAY METHODS
+#pragma region SPECIAL METHODS
     /**************************************************************************************/
     void write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t charWith, uint8_t num, uint8_t line, uint8_t row);
     unsigned char prop_write_char(char c, LCD_Display mode);
@@ -368,9 +368,9 @@ class LCD8448 {
     void write_number_big(uint8_t X, uint8_t Y, int number, uint8_t comma, uint8_t digits, LCD_Display mode);
     void write_number_big2(uint8_t X, uint8_t Y, uint8_t number);
     /*************************************************************************************/
-#pragma endregion SPECIAL DISPLAY METHODS
+#pragma endregion SPECIAL METHODS
 
-#pragma region VIRTUAL DISPLAY METHODS
+#pragma region VIRTUAL LCD METHODS
     /**************************************************************************************/
     void vd_clear(void);
     void vd_print(void);
@@ -385,7 +385,7 @@ class LCD8448 {
     void vd_write_rect(uint8_t X0, uint8_t Y0, uint8_t a, uint8_t b);
     void vd_write_circle(uint8_t X0, uint8_t Y0, uint8_t radius);
 
-#pragma region SPECIAL DISPLAY METHODS
+#pragma region SPECIAL METHODS
     /**************************************************************************************/
     void vd_write_framework(char *head, LCD_Display mode);
     void vd_alert(const char *text);
@@ -395,7 +395,7 @@ class LCD8448 {
     /**************************************************************************************/
 #pragma endregion SPECIAL DISPLAY METHODS
 
-#pragma region SPECIAL DISPLAY SYMBOL METHODS
+#pragma region SPECIAL SYMBOL METHODS
     /**************************************************************************************/
     enum LCD_Symbols : uint8_t {
         ANTENNA_1,
@@ -433,7 +433,7 @@ class LCD8448 {
     /**************************************************************************************/
 #pragma endregion SPECIAL DISPLAY SYMBOL METHODS
     /**************************************************************************************/
-#pragma endregion VIRTUAL DISPLAY METHODS
+#pragma endregion VIRTUAL LCD METHODS
 #pragma endregion PUBLIC
 };
 

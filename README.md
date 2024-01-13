@@ -1,14 +1,22 @@
 # LCD8448
 
-LCD Display Library for the 8448 LCD Display (Nokia 5110 display)
+LCD Library for the 8448 LCD (Nokia 5110 display)
 
 It's based on de Library from Lauren from DFRobot / "LCD4884" version 0.3
 
 See [LCD8448](https://github.com/RedCali/LCD8448.git) for more detailed information on how to use LCD8448
 
+## Open topics / Ideas
+
+- [ ] Using Base class for SPI and Pins
+  - [ ] CTor --> Passing the SPI and PIN objects from base class AND using KEY `explicit`
+- [ ] Refactor hard coded HEX constants to defines for better readability
+- [ ] Documentation of Methods
+- [ ] Arduino Keywords
+
 ## Include the Library in your project
 
-To include the Library in ypur project you need to install it or take a copy in your project.  
+To include the Library in your project you need to install it or take a copy in your project.  
 Copy the `LCD8448_Config.h` file beside your `main.cpp` (or any other folder) to overwrite the default configuration and adjust it to the project needs.
 
 ```cpp
@@ -18,11 +26,11 @@ Copy the `LCD8448_Config.h` file beside your `main.cpp` (or any other folder) to
 #include <LCD8448.h>
 ```
 
-## Using with diffrent IDE'S
+## Using with different IDE'S
 
 ### Arduino
 
-The easiest way to get started on the Arduino Platform is, to use an example project like `LCD8448_simple`, as there is allready included the `LCD8448_Config.h` file.
+The easiest way to get started on the Arduino Platform is, to use an example project like `LCD8448_simple`, as there is already included the `LCD8448_Config.h` file.
 
 ### PlatformIO
 
