@@ -561,22 +561,22 @@ void LCD8448::vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode,
         }
         case ANTENNA_STRENGTH_1: {
             pSymbol = (unsigned char *)antennaStrength1;
-            width = 7;
+            width = 18;
             break;
         }
         case ANTENNA_STRENGTH_2: {
             pSymbol = (unsigned char *)antennaStrength2;
-            width = 7;
+            width = 12;
             break;
         }
         case ARROW_UP_DOWN: {
             pSymbol = (unsigned char *)arrowUpDown;
-            width = 7;
+            width = 12;
             break;
         }
         case BAR_GRAPH: {
             pSymbol = (unsigned char *)barGraph;
-            width = 7;
+            width = 5;
             break;
         }
         case BATTERY: {
@@ -586,12 +586,12 @@ void LCD8448::vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode,
         }
         case BLUETHOOTH: {
             pSymbol = (unsigned char *)bluetooth;
-            width = 8;
+            width = 6;
             break;
         }
         case ENVELOPE: {
             pSymbol = (unsigned char *)envelope;
-            width = 8;
+            width = 12;
             break;
         }
         case NETWORK: {
@@ -606,7 +606,7 @@ void LCD8448::vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode,
         }
         case SIGNAL_STRENGTH_1: {
             pSymbol = (unsigned char *)signalStrength1;
-            width = 7;
+            width = 13;
             break;
         }
         case SIGNAL_STRENGTH_2: {
@@ -721,7 +721,7 @@ void LCD8448::vd_bluetooth(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mo
     unsigned char *pImages;
     pImages = (unsigned char *)bluetooth;
     for (char i = 0; i < 6; i++) {
-        ch = pgm_read_byte(pImages + i);// + 8 * state);
+        ch = pgm_read_byte(pImages + i);  // + 8 * state);
         vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
     }
 }
