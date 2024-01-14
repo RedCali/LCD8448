@@ -398,31 +398,31 @@ void LCD8448::write_number_big2(uint8_t X, uint8_t Y, uint8_t number, LCD_Displa
 /*additional drawing functionality*/
 void LCD8448::vd_clear(void) {
     for (int i = 0; i < 504; i++) {
-        virtualDisplay[i] = 0;
+        _virtualDisplay[i] = 0;
     }
 }
 
 void LCD8448::vd_print(void) {
     if (_sleep) return;
-    draw_bmp_pixel(0, 0, virtualDisplay, 84, 48);
+    draw_bmp_pixel(0, 0, _virtualDisplay, 84, 48);
 }
 
 void LCD8448::vd_set_pixel(uint8_t X0, uint8_t Y0) {
-    virtualDisplay[X0 + (Y0 / 8) * 84] |= (1 << Y0 % 8);
+    _virtualDisplay[X0 + (Y0 / 8) * 84] |= (1 << Y0 % 8);
 }
 
 void LCD8448::vd_set_pixel_byte(uint8_t X0, uint8_t Y0, uint8_t c) {
-    virtualDisplay[X0 + Y0 * 84] |= c;
+    _virtualDisplay[X0 + Y0 * 84] |= c;
 }
 
 void LCD8448::vd_set_pixel_byte_any(uint8_t X0, uint8_t Y0, uint8_t c) {
     unsigned char position = Y0 % 8;
     unsigned char offset = Y0 / 8;
 
-    virtualDisplay[X0 + offset * 84] |= (c << position);
+    _virtualDisplay[X0 + offset * 84] |= (c << position);
     offset++;
     if (offset <= 5) {
-        virtualDisplay[X0 + offset * 84] |= (c >> (8 - position));
+        _virtualDisplay[X0 + offset * 84] |= (c >> (8 - position));
     }
 }
 
@@ -589,17 +589,17 @@ void LCD8448::vd_write_framework(char *head, LCD_Display mode = NORMAL) {
     vd_write_string(headCenter, 0, head, mode);
 
     for (uint8_t i = 0; i < headCenter; i++) {
-        virtualDisplay[i] = 0xff;
+        _virtualDisplay[i] = 0xff;
     }
 
     for (uint8_t i = headCenter + lengthHead * 6; i < 84; i++) {
-        virtualDisplay[i] = 0xff;
+        _virtualDisplay[i] = 0xff;
     }
 
     // Frame around the display
     for (uint8_t i = 0; i < 6; i++) {
-        virtualDisplay[84 * i] = 0xff;
-        virtualDisplay[83 + 84 * i] = 0xff;
+        _virtualDisplay[84 * i] = 0xff;
+        _virtualDisplay[83 + 84 * i] = 0xff;
     }
     // vd_write_line(1, 0, 83, 0);
     vd_write_line(1, 47, 83, 47);
@@ -612,7 +612,7 @@ void LCD8448::vd_write_framework(char *head, LCD_Display mode = NORMAL) {
 void LCD8448::vd_alert(const char *text) {
     for (uint16_t i = 0; i < 504; i++) {
         if (i % 2) {
-            virtualDisplay[i] |= 0x55;
+            _virtualDisplay[i] |= 0x55;
         }
     }
 
@@ -620,25 +620,25 @@ void LCD8448::vd_alert(const char *text) {
     uint16_t offset = (14 - length) * 3;
 
     for (uint16_t i = offset + 1 * 84 - 4; i < offset + 1 * 84 + length * 6 + 4; i++) {
-        virtualDisplay[i] |= 0xf0;
-        virtualDisplay[i + 1 * 84] = 0x00;
-        virtualDisplay[i + 2 * 84] |= 0x0f;
+        _virtualDisplay[i] |= 0xf0;
+        _virtualDisplay[i + 1 * 84] = 0x00;
+        _virtualDisplay[i + 2 * 84] |= 0x0f;
     }
 
     for (uint16_t i = offset + 2 * 84 - 4; i < offset + 2 * 84; i++) {
-        virtualDisplay[i] = 0xff;
-        virtualDisplay[i + length * 6 + 4] = 0xff;
+        _virtualDisplay[i] = 0xff;
+        _virtualDisplay[i + length * 6 + 4] = 0xff;
     }
 
     vd_write_string(offset, 2 * 8, text, INVERTED);
 
-    draw_bmp_pixel(0, 0, virtualDisplay, 84, 48);
+    draw_bmp_pixel(0, 0, _virtualDisplay, 84, 48);
 }
 
 void LCD8448::vd_question(const char *question, uint8_t active) {
     for (uint16_t i = 0; i < 504; i++) {
         if (i % 2) {
-            virtualDisplay[i] |= 0x55;
+            _virtualDisplay[i] |= 0x55;
         }
     }
 
@@ -656,26 +656,26 @@ void LCD8448::vd_question(const char *question, uint8_t active) {
     }
 
     for (uint16_t i = start + 1 * 84; i < end + 1 * 84; i++) {
-        virtualDisplay[i] |= 0xf0;
-        virtualDisplay[i + 1 * 84] = 0x00;
-        virtualDisplay[i + 2 * 84] = 0x7F;
-        virtualDisplay[i + 3 * 84] = 0x00;
-        virtualDisplay[i + 4 * 84] |= 0x0f;
+        _virtualDisplay[i] |= 0xf0;
+        _virtualDisplay[i + 1 * 84] = 0x00;
+        _virtualDisplay[i + 2 * 84] = 0x7F;
+        _virtualDisplay[i + 3 * 84] = 0x00;
+        _virtualDisplay[i + 4 * 84] |= 0x0f;
     }
 
     for (uint16_t i = start; i < offset; i++) {
-        virtualDisplay[i + 2 * 84] = 0xFF;
-        virtualDisplay[i + 2 * 84 + end - offset] = 0xFF;
+        _virtualDisplay[i + 2 * 84] = 0xFF;
+        _virtualDisplay[i + 2 * 84 + end - offset] = 0xFF;
     }
 
     for (uint16_t i = start; i < 12; i++) {
-        virtualDisplay[i + 3 * 84] = 0xff;
-        virtualDisplay[i + 4 * 84] = 0xff;
+        _virtualDisplay[i + 3 * 84] = 0xff;
+        _virtualDisplay[i + 4 * 84] = 0xff;
     }
 
     for (uint16_t i = 72; i < end; i++) {
-        virtualDisplay[i + 3 * 84] = 0xff;
-        virtualDisplay[i + 4 * 84] = 0xff;
+        _virtualDisplay[i + 3 * 84] = 0xff;
+        _virtualDisplay[i + 4 * 84] = 0xff;
     }
 
     vd_write_string(offset, 2 * 8, question, INVERTED);
@@ -684,8 +684,8 @@ void LCD8448::vd_question(const char *question, uint8_t active) {
         vd_write_line(12, 31, 42, 31);
 
         for (uint16_t i = 12 + 4 * 84; i < 15 + 4 * 84; i++) {
-            virtualDisplay[i] = 0xff;
-            virtualDisplay[i + 27] = 0xff;
+            _virtualDisplay[i] = 0xff;
+            _virtualDisplay[i + 27] = 0xff;
         }
     } else if (active == 2) {
         vd_write_line(42, 31, 72, 31);
@@ -694,21 +694,21 @@ void LCD8448::vd_question(const char *question, uint8_t active) {
     vd_write_string(15, 4 * 8, " NO ", (active == 1) ? INVERTED : NORMAL);
     vd_write_string(42, 4 * 8, " YES ", (active == 2) ? INVERTED : NORMAL);
 
-    draw_bmp_pixel(0, 0, virtualDisplay, 84, 48);
+    draw_bmp_pixel(0, 0, _virtualDisplay, 84, 48);
 }
 
 void LCD8448::vd_overlayON(void) {
     for (uint16_t i = 0; i < 504; i++) {
-        virtualDisplayTemp[i] = virtualDisplay[i];
+        _virtualDisplayTemp[i] = _virtualDisplay[i];
     }
 }
 
 void LCD8448::vd_overlayOFF(void) {
     for (uint16_t i = 0; i < 504; i++) {
-        virtualDisplay[i] = virtualDisplayTemp[i];
+        _virtualDisplay[i] = _virtualDisplayTemp[i];
     }
 
-    draw_bmp_pixel(0, 0, virtualDisplay, 84, 48);
+    draw_bmp_pixel(0, 0, _virtualDisplay, 84, 48);
 }
 /**************************************************************************************/
 #pragma endregion SPECIAL METHODS

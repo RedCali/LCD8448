@@ -21,9 +21,6 @@
 // Commend / uncommend the define for Debugging
 #define LCD_DEBUG
 
-// Define here if backlight signal is inverted
-#define BACKLIGHT_INVERTED
-
 // Define if the Arduino LCD Shield is used
 //#define LCD_SHIELD
 

@@ -74,8 +74,9 @@ class LCD8448 {
     uint8_t _initMode;
     uint8_t _contrast;
     uint8_t _sleep;
-    unsigned char virtualDisplay[504];
-    unsigned char virtualDisplayTemp[504];
+    uint8_t _backlightInverted;
+    unsigned char _virtualDisplay[504];
+    unsigned char _virtualDisplayTemp[504];
 
 #pragma region INTERNAL METHODS
     inline void chipSelect() {
@@ -209,7 +210,7 @@ class LCD8448 {
         init((LCD_Mode)_initMode);
     }
 
-    void init(LCD_Mode initMode) {
+    void init(LCD_Mode initMode, uint8_t backlightInverted = false) {
 #ifdef LCD_DEBUG
 #if defined(ARDUINO) && ARDUINO >= 100
         Serial.print("LCD PINS --> SPI SCK: ");
@@ -255,6 +256,8 @@ class LCD8448 {
         // SPSR
         // SPDR = 0;
 #endif
+        // Set backlight inversion flag
+        _backlightInverted = backlightInverted;
         // Reset Sleep mode
         _sleep = false;
         // turn off the backlight
@@ -318,63 +321,62 @@ class LCD8448 {
     inline void backlight(uint8_t dat) {
         if (_sleep) return;
 #if defined(ARDUINO) && ARDUINO >= 100
-#ifdef BACKLIGHT_INVERTED
-        if (dat != 0)
-            digitalWrite(LCD_BL, LOW);
-        else
-            digitalWrite(LCD_BL, HIGH);
+        if (_backlightInverted) {
+            if (dat != 0)
+                digitalWrite(LCD_BL, LOW);
+            else
+                digitalWrite(LCD_BL, HIGH);
+        } else {
+            if (dat != 0)
+                digitalWrite(LCD_BL, HIGH);
+            else
+                digitalWrite(LCD_BL, LOW);
+        }
 #else
-        if (dat != 0)
-            digitalWrite(LCD_BL, HIGH);
-        else
-            digitalWrite(LCD_BL, LOW);
-
-#endif
-#else
-#ifdef BACKLIGHT_INVERTED
-        if (dat != 0)
-            LCD_BL_PORT &= ~(1 << LCD_BL);
-        else
-            LCD_BL_PORT &= (1 << LCD_BL);
-#else
-        if (dat != 0)
-            LCD_BL_PORT &= (1 << LCD_BL);
-        else
-            LCD_BL_PORT &= ~(1 << LCD_BL);
-#endif
+        if (_backlightInverted) {
+            if (dat != 0)
+                LCD_BL_PORT &= ~(1 << LCD_BL);
+            else
+                LCD_BL_PORT &= (1 << LCD_BL);
+        } else {
+            if (dat != 0)
+                LCD_BL_PORT &= (1 << LCD_BL);
+            else
+                LCD_BL_PORT &= ~(1 << LCD_BL);
+        }
 #endif
     }
 
     inline void setBacklightOFF(void) {
 #if defined(ARDUINO) && ARDUINO >= 100
-#ifdef BACKLIGHT_INVERTED
-        digitalWrite(LCD_BL, HIGH);
+        if (_backlightInverted) {
+            digitalWrite(LCD_BL, HIGH);
+        } else {
+            digitalWrite(LCD_BL, LOW);
+        }
 #else
-        digitalWrite(LCD_BL, LOW);
-#endif
-#else
-#ifdef BACKLIGHT_INVERTED
-        LCD_BL_PORT |= (1 << LCD_BL);
-#else
-        LCD_BL_PORT &= ~(1 << LCD_BL);
-#endif
+        if (_backlightInverted) {
+            LCD_BL_PORT |= (1 << LCD_BL);
+        } else {
+            LCD_BL_PORT &= ~(1 << LCD_BL);
+        }
 #endif
     }
 
     inline void setBacklightON(void) {
         if (_sleep) return;
 #if defined(ARDUINO) && ARDUINO >= 100
-#ifdef BACKLIGHT_INVERTED
-        digitalWrite(LCD_BL, LOW);
+        if (_backlightInverted) {
+            digitalWrite(LCD_BL, LOW);
+        } else {
+            digitalWrite(LCD_BL, HIGH);
+        }
 #else
-        digitalWrite(LCD_BL, HIGH);
-#endif
-#else
-#ifdef BACKLIGHT_INVERTED
-        LCD_BL_PORT &= ~(1 << LCD_BL);
-#else
-        LCD_BL_PORT |= (1 << LCD_BL);
-#endif
+        if (_backlightInverted) {
+            LCD_BL_PORT &= ~(1 << LCD_BL);
+        } else {
+            LCD_BL_PORT |= (1 << LCD_BL);
+        }
 #endif
     }
 
