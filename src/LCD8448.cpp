@@ -257,7 +257,7 @@ void LCD8448::write_num_integer(uint8_t X, uint8_t Y, long num, int length, char
     }
 }
 
-void LCD8448::write_num_float(uint8_t X, uint8_t Y, float num, uint8_t dec, char divider, int length, char filler, LCD_Display mode = NORMAL) {
+void LCD8448::write_num_float(uint8_t X, uint8_t Y, float num, int length, uint8_t dec, char divider, char filler, LCD_Display mode = NORMAL) {
     if (_sleep) return;
     char st[27];
     uint8_t neg = false;

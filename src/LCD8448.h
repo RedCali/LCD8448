@@ -185,9 +185,9 @@ class LCD8448 {
     enum LCD_Mode : uint8_t {
         // Display Control Instruction,  bit DB3 = 1
         //                    // 3D0E
-        MODE_BLANK = PCD8544_DISPLAY_CONTROL | PCD8544_DISPLAY_BLANK,    // 1000 - D=0 / E=0
-        MODE_ALL_ON = PCD8544_DISPLAY_CONTROL | PCD8544_DISPLAY_ALLON,   // 1001 - D=0 / E=1
-        MODE_REGULAR = PCD8544_DISPLAY_CONTROL | PCD8544_DISPLAY_NORMAL,  // 1100 - D=1 / E=0
+        MODE_BLANK = PCD8544_DISPLAY_CONTROL | PCD8544_DISPLAY_BLANK,       // 1000 - D=0 / E=0
+        MODE_ALL_ON = PCD8544_DISPLAY_CONTROL | PCD8544_DISPLAY_ALLON,      // 1001 - D=0 / E=1
+        MODE_REGULAR = PCD8544_DISPLAY_CONTROL | PCD8544_DISPLAY_NORMAL,    // 1100 - D=1 / E=0
         MODE_INVERTED = PCD8544_DISPLAY_CONTROL | PCD8544_DISPLAY_INVERTED  // 1101 - D=1 / E=1
     };
 
@@ -272,11 +272,11 @@ class LCD8448 {
 
         // data_type=0, all are command bytes
         writeCommand(PCD8544_FUNCTIONSET | PCD8544_EXTENDED_INSTRUCTION);  // Function Set:0010 0001 --> PD=0, V=0, H=1;
-        //writeCommand(0xc0);  // Set Vop:1 Vop6 Vop5 Vop4 Vop3 Vop2 Vop1 Vop0=1100 0000
+        // writeCommand(0xc0);  // Set Vop:1 Vop6 Vop5 Vop4 Vop3 Vop2 Vop1 Vop0=1100 0000
         writeCommand(PCD8544_SET_VOP | _contrast);
         writeCommand(PCD8544_SET_TEMP | LCD_TEMP);  // Set Temperature Coefficient:0 0 0 0 0 1 Tc1 Tc0=0000 0110;Tc1=1,Tc0=0(Vlcd temperature coefficient 2)
         writeCommand(PCD8544_SET_BIAS | LCD_BIAS);  // Set Bias System (BSx):0 0 0 1 0 BS2 BS1 BS0=0001 0011;BS2=0, BS1=1, BS0=1==>N=4,MUX RATE=1:48
-        writeCommand(PCD8544_FUNCTIONSET);  // Function Set:0 0 1 0 0 PD V H=0010 0000;PD=0,V=0,H=0;
+        writeCommand(PCD8544_FUNCTIONSET);          // Function Set:0 0 1 0 0 PD V H=0010 0000;PD=0,V=0,H=0;
 
         clearLCD();
         vd_clear();
@@ -378,6 +378,10 @@ class LCD8448 {
 #endif
     }
 
+    // timed backlight
+    // dimmed backlight
+    // faded switch on/off in case of dimming is active
+
     inline void mode(LCD_Mode mode) {
         if (_sleep) return;
 #ifdef LCD_DEBUG
@@ -433,6 +437,7 @@ class LCD8448 {
 
 #pragma region DIRECT METHODS
     /**************************************************************************************/
+    void drawArduinoLogo();
     void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map);
     void draw_bmp_pixel(uint8_t X, uint8_t Y, const unsigned char *map, uint8_t pixelsWidth, uint8_t pixelHeight);
     void draw_bmp_pixel_P(uint8_t X, uint8_t Y, const unsigned char *map);
@@ -441,7 +446,7 @@ class LCD8448 {
     void write_char_big(uint8_t X, uint8_t Y, unsigned char c, LCD_Display mode = NORMAL);
     void write_string_big(uint8_t X, uint8_t Y, const char *str, LCD_Display mode = NORMAL);
     void write_num_integer(uint8_t X, uint8_t Y, long num, int length, char filler, LCD_Display mode = NORMAL);
-    void write_num_float(uint8_t X, uint8_t Y, float num, uint8_t dec, char divider, int length, char filler, LCD_Display mode = NORMAL);
+    void write_num_float(uint8_t X, uint8_t Y, float num, int length, uint8_t dec, char divider, char filler, LCD_Display mode = NORMAL);
     /**************************************************************************************/
 #pragma endregion DIRECT METHODS
 
@@ -458,7 +463,6 @@ class LCD8448 {
 
 #pragma region VIRTUAL LCD METHODS
     /**************************************************************************************/
-    void drawArduinoLogo();
     void vd_clear(void);
     void vd_print(void);
     void vd_set_pixel(uint8_t X0, uint8_t Y0);
