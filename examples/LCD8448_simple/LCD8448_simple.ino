@@ -36,7 +36,8 @@ void setup() {
   // Initialize digital pin LED_BUILTIN as an output.
   pinMode(LED_PIN, OUTPUT);
   // Init LCD Display
-  initLCD();
+  Serial.println("Init Display....");
+  lcd.init(LCD8448::MODE_REGULAR, false);
 
   // Write constant strings into the display
   lcd.write_string(1 * 6 + 3, 0, "Hello", LCD8448::NORMAL);
@@ -68,15 +69,4 @@ void loop() {
     // Reset the counter if reaches 1000
     if (_counter >= 1000) _counter = 0;
   }
-}
-
-
-void initLCD() {
-  Serial.println("Init Display....");
-  lcd.init();
-}
-
-void stopLCD() {
-  Serial.println("Stop Display....");
-  lcd.off();
 }
