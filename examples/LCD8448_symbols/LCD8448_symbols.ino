@@ -32,9 +32,12 @@ void setup() {
   // Initialize digital pin LED_BUILTIN as an output.
   pinMode(LED_PIN, OUTPUT);
   // Init LCD Display
-  lcd.init();
+  Serial.println("Init Display....");
+  lcd.init(LCD8448::MODE_REGULAR, false);
+
   // Switch on the Backlight of the LCD
   lcd.setBacklightON();
+  // Clear the virtual Display
   lcd.vd_clear();
 }
 
@@ -79,15 +82,4 @@ void loop() {
     // Store actull time _
     _millisPrevious = millis();
   }
-}
-
-
-void initLCD() {
-  Serial.println("Init Display....");
-  lcd.init();
-}
-
-void stopLCD() {
-  Serial.println("Stop Display....");
-  lcd.off();
 }
