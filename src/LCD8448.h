@@ -106,10 +106,7 @@ class LCD8448 {
     Serial.print(LCD_RST);
     Serial.print(" / SPI BL: ");
     Serial.println(LCD_BL);
-#else
-
 #endif
-
     pinMode(SPI_SCK, OUTPUT);
     pinMode(SPI_MOSI, OUTPUT);
     pinMode(SPI_CS, OUTPUT);
