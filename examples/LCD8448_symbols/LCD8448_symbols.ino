@@ -64,7 +64,7 @@ void loop() {
 
     lcd.vd_battery(10, 3, _counter % 11, LCD8448::NORMAL);
     lcd.vd_barGraph(20, 3, _counter % 9, LCD8448::NORMAL);
-    lcd.vd_bluetooth(30, 3, 1, LCD8448::NORMAL);
+    lcd.vd_bluetooth(30, 3, _counter % 2, LCD8448::NORMAL);
     lcd.vd_envelope(40, 3, _counter % 2, LCD8448::NORMAL);
     lcd.vd_network(60, 3, _counter % 3, LCD8448::NORMAL);
 
