@@ -1,39 +1,103 @@
-#######################################
-# Syntax Coloring Map LCD8448
-#######################################
+==================================
+CLASS
+==================================
+LCD8448	KEYWORD1
 
-#######################################
-# Datatypes (KEYWORD1)
-#######################################
-MODE_BLANK		KEYWORD1
-MODE_ALL_ON		KEYWORD1
-MODE_REGULAR	KEYWORD1
-MODE_INVERTED	KEYWORD1
-NORMAL			KEYWORD1
-INVERTED		KEYWORD1
+==================================
+FUNCTIONS
+==================================
+init	KEYWORD2
+on	KEYWORD2
+off	KEYWORD2
+reset	KEYWORD2
+backlight	KEYWORD2
+setBacklightOFF	KEYWORD2
+setBacklightON	KEYWORD2
+mode	KEYWORD2
+invert	KEYWORD2
+setContrast	KEYWORD2
+enableSleep	KEYWORD2
+disableSleep	KEYWORD2
+clearLCD	KEYWORD2
+clearRow	KEYWORD2
+setXY	KEYWORD2
+drawArduinoLogo	KEYWORD2
+draw_bmp_pixel	KEYWORD2
+draw_bmp_pixel_P	KEYWORD2
+write_char	KEYWORD2
+write_string	KEYWORD2
+write_char_big	KEYWORD2
+write_string_big	KEYWORD2
+write_num_integer	KEYWORD2
+write_num_float	KEYWORD2
+write_chinese	KEYWORD2
+prop_write_char	KEYWORD2
+prop_write_string	KEYWORD2
+write_number_big	KEYWORD2
+write_number_big2	KEYWORD2
+vd_clear	KEYWORD2
+vd_print	KEYWORD2
+vd_set_pixel	KEYWORD2
+vd_set_pixel_byte	KEYWORD2
+vd_set_pixel_byte_any	KEYWORD2
+vd_write_char	KEYWORD2
+vd_write_char_v	KEYWORD2
+vd_write_string	KEYWORD2
+vd_write_string_v	KEYWORD2
+vd_write_line	KEYWORD2
+vd_write_rect	KEYWORD2
+vd_write_round_rect	KEYWORD2
+vd_write_circle	KEYWORD2
+vd_write_framework	KEYWORD2
+vd_alert	KEYWORD2
+vd_question	KEYWORD2
+vd_overlayON	KEYWORD2
+vd_overlayOFF	KEYWORD2
+vd_symbol	KEYWORD2
+vd_antenna1	KEYWORD2
+vd_antenna2	KEYWORD2
+vd_antennaStrength1	KEYWORD2
+vd_antennaStrength2	KEYWORD2
+vd_arrowUpDown	KEYWORD2
+vd_barGraph	KEYWORD2
+vd_battery	KEYWORD2
+vd_bluetooth	KEYWORD2
+vd_envelope	KEYWORD2
+vd_network	KEYWORD2
+vd_sdCard	KEYWORD2
+vd_signalStrength1	KEYWORD2
+vd_signalStrength2	KEYWORD2
+vd_wireless	KEYWORD2
 
-#######################################
-# Methods and Functions (KEYWORD2)
-#######################################
-doSomething KEYWORD2
+==================================
+CONSTANTS
+==================================
+LCD8448_H_	LITERAL1
+LCD8448_VERSION	LITERAL1
+PCD8544_POWERDOWN	LITERAL1
+PCD8544_ENTRYMODE	LITERAL1
+PCD8544_EXTENDED_INSTRUCTION	LITERAL1
+PCD8544_DISPLAY_BLANK	LITERAL1
+PCD8544_DISPLAY_NORMAL	LITERAL1
+PCD8544_DISPLAY_ALLON	LITERAL1
+PCD8544_DISPLAY_INVERTED	LITERAL1
+PCD8544_FUNCTIONSET	LITERAL1
+PCD8544_DISPLAY_CONTROL	LITERAL1
+PCD8544_SET_XY_COLUM_X	LITERAL1
+PCD8544_SET_XY_COLUM_X_MASK	LITERAL1
+PCD8544_SET_XY_ROW_Y	LITERAL1
+PCD8544_SET_XY_ROW_Y_MASK	LITERAL1
+PCD8544_SET_TEMP	LITERAL1
+PCD8544_SET_BIAS	LITERAL1
+PCD8544_SET_VOP	LITERAL1
+LCD_BIAS	LITERAL1
+LCD_TEMP	LITERAL1
+LCD_CONTRAST_DEFAULT	LITERAL1
+LCD_CONTRAST_MAX	LITERAL1
+LCD_CONTRAST_MIN	LITERAL1
+LCD_COMMAND	LITERAL1
+LCD_DATA	LITERAL1
 
-
-#######################################
-# Instances (KEYWORD2)
-#######################################
-LCD8448    KEYWORD2
-
-
-#######################################
-# Structures (KEYWORD3)
-#######################################
-LCD_Mode	KEYWORD3
-LCD_Display	KEYWORD3
-
-
-#######################################
-# Constants (LITERAL1)
-#######################################
-COMMAND	LITERAL1
-DATA	LITERAL1
-
+==================================
+DATA TYPES
+==================================
