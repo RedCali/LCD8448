@@ -197,7 +197,8 @@ class LCD8448 {
     };
 #endif
   }
-
+  
+  [[deprecated("Replaced by 'setBacklightOFF()' and/or `setBacklightON()`")]]
   inline void backlight(uint8_t dat) {
     if (_sleep) return;
 #if defined(ARDUINO) && ARDUINO >= 100
