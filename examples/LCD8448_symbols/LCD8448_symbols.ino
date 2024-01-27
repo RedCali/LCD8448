@@ -22,6 +22,7 @@ unsigned char _pinState = 0x00;
 // Diaplay Variables
 // Text Backfound definition
 LCD8448::LCD_Display _displayHighlight = LCD8448::NORMAL;
+LCD8448 lcd(LCD8448::MODE_REGULAR, LCD8448::NORMAL);
 // Storage for Runtime measuring for interval control
 unsigned long _millisPrevious;
 unsigned int _counter = 0;
@@ -33,7 +34,7 @@ void setup() {
   pinMode(LED_PIN, OUTPUT);
   // Init LCD Display
   Serial.println("Init Display....");
-  lcd.init(LCD8448::MODE_REGULAR, LCD8448::NORMAL);
+  lcd.init();
 
   // Switch on the Backlight of the LCD
   lcd.setBacklightON();

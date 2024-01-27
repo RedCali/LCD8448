@@ -22,6 +22,7 @@ unsigned char _pinState = 0x00;
 // Diaplay Variables
 // Text Background definition
 LCD8448::LCD_Display _displayHighlight = LCD8448::NORMAL;
+LCD8448 lcd(LCD8448::MODE_REGULAR, LCD8448::NORMAL);
 // Nummeric counter
 unsigned long _counter = 0;
 // Char array for numeric convertion
@@ -37,7 +38,7 @@ void setup() {
   pinMode(LED_PIN, OUTPUT);
   // Init LCD Display
   Serial.println("Init Display....");
-  lcd.init(LCD8448::MODE_REGULAR, LCD8448::NORMAL);
+  lcd.init();
 
   // Write constant strings into the display
   lcd.write_string(1 * 6 + 3, 0, "Hello", LCD8448::NORMAL);
