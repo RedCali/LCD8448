@@ -63,7 +63,7 @@
 #define LCD_TEMP 0x02              // Range: 0-3 (0x00-0x03)
 #define LCD_CONTRAST_DEFAULT 0x46  // Range: 0-127 (0x00-0x7F)
 #define LCD_CONTRAST_MAX 0x7F      // Range: 0-127 (0x00-0x7F)
-#define LCD_CONTRAST_MIN 0x00      // Range: 0-127 (0x00-0x7F)
+#define LCD_CONTRAST_MIN 0x01      // Range: 0-127 (0x00-0x7F)
 // Display Command / Data
 #define LCD_COMMAND 0
 #define LCD_DATA 1
@@ -342,7 +342,7 @@ class LCD8448 {
 
   #pragma region SPECIAL METHODS
   /**************************************************************************************/
-  void write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t charWith, uint8_t num, uint8_t line, uint8_t row, LCD_Display mode = NORMAL);
+  void write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t charWith, uint8_t num, uint8_t row, LCD_Display mode = NORMAL);
   unsigned char prop_write_char(char c, LCD_Display mode = NORMAL);
   void prop_write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode = NORMAL);
   /*************************************************************************************/

@@ -37,7 +37,7 @@ void setup() {
   pinMode(LED_PIN, OUTPUT);
   // Init LCD Display
   Serial.println("Init Display....");
-  lcd.init(LCD8448::MODE_REGULAR, false);
+  lcd.init(LCD8448::MODE_REGULAR, LCD8448::NORMAL);
 
   // Write constant strings into the display
   lcd.write_string(1 * 6 + 3, 0, "Hello", LCD8448::NORMAL);
