@@ -293,7 +293,7 @@ void LCD8448::write_num_float(uint8_t X, uint8_t Y, float num, int length, uint8
 
 #pragma region SPECIAL METHODS
 /**************************************************************************************/
-void LCD8448::write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t charWith, uint8_t num, uint8_t line, uint8_t row, LCD_Display mode) {
+void LCD8448::write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t charWith, uint8_t num, uint8_t row, LCD_Display mode) {
   if (_sleep) return;
   unsigned char i, n;
 
@@ -376,7 +376,7 @@ void LCD8448::write_number_big(uint8_t X, uint8_t Y, int number, uint8_t comma, 
   }
   numberInArray[digits] = '\0';
 
-  write_string_big(X, Y, numberInArray, NORMAL);
+  write_string_big(X, Y, numberInArray, mode);
 }
 
 void LCD8448::write_number_big2(uint8_t X, uint8_t Y, uint8_t number, LCD_Display mode) {
@@ -886,7 +886,7 @@ void LCD8448::vd_bluetooth(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mo
   unsigned char ch;
   unsigned char *pImages = (unsigned char *)bluetooth;
   for (char i = 0; i < 6; i++) {
-    ch = pgm_read_byte(pImages + i);  // + 8 * state);
+    ch = pgm_read_byte(pImages + i + 6 * state);
     vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
   }
 }

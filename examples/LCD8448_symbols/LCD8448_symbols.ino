@@ -33,7 +33,7 @@ void setup() {
   pinMode(LED_PIN, OUTPUT);
   // Init LCD Display
   Serial.println("Init Display....");
-  lcd.init(LCD8448::MODE_REGULAR, false);
+  lcd.init(LCD8448::MODE_REGULAR, LCD8448::NORMAL);
 
   // Switch on the Backlight of the LCD
   lcd.setBacklightON();

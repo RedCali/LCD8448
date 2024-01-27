@@ -342,7 +342,7 @@ class LCD8448 {
 
   #pragma region SPECIAL METHODS
   /**************************************************************************************/
-  void write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t charWith, uint8_t num, uint8_t line, uint8_t row, LCD_Display mode = NORMAL);
+  void write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t charWith, uint8_t num, uint8_t row, LCD_Display mode = NORMAL);
   unsigned char prop_write_char(char c, LCD_Display mode = NORMAL);
   void prop_write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode = NORMAL);
   /*************************************************************************************/
