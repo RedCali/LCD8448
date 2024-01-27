@@ -57,7 +57,7 @@ void LCD8448::enableSleep() {
     _sleep = true;
     writeCommand(PCD8544_SET_XY_COLUM_X);
     writeCommand(PCD8544_SET_XY_COLUM_X);
-    for (int b = 0; b < 504; b++)
+    for (int i = 0; i < 504; ++i)
         writeCommand(0);
     writeCommand(PCD8544_FUNCTIONSET | PCD8544_POWERDOWN);
 }
@@ -136,7 +136,7 @@ void LCD8448::draw_bmp_pixel_P(uint8_t X, uint8_t Y, const unsigned char *map) {
     }
 }
 
-void LCD8448::write_char(unsigned char c, LCD_Display mode = NORMAL) {
+void LCD8448::write_char(unsigned char c, LCD_Display mode) {
     if (_sleep) return;
     unsigned char line, ch;
     unsigned char *pFont;
@@ -150,7 +150,7 @@ void LCD8448::write_char(unsigned char c, LCD_Display mode = NORMAL) {
     }
 }
 
-void LCD8448::write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode = NORMAL) {
+void LCD8448::write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode) {
     if (_sleep) return;
 #ifdef LCD_DEBUG
 #if defined(ARDUINO) && ARDUINO >= 100
@@ -166,7 +166,7 @@ void LCD8448::write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mo
     }
 }
 
-void LCD8448::write_char_big(uint8_t X, uint8_t Y, unsigned char c, LCD_Display mode = NORMAL) {
+void LCD8448::write_char_big(uint8_t X, uint8_t Y, unsigned char c, LCD_Display mode) {
     if (_sleep) return;
     unsigned char i, j;
     unsigned char *pFont;
@@ -194,7 +194,7 @@ void LCD8448::write_char_big(uint8_t X, uint8_t Y, unsigned char c, LCD_Display 
     }
 }
 
-void LCD8448::write_string_big(uint8_t X, uint8_t Y, const char *str, LCD_Display mode = NORMAL) {
+void LCD8448::write_string_big(uint8_t X, uint8_t Y, const char *str, LCD_Display mode) {
     if (_sleep) return;
     while (*str) {
         write_char_big(X, Y, *str, mode);
@@ -207,7 +207,7 @@ void LCD8448::write_string_big(uint8_t X, uint8_t Y, const char *str, LCD_Displa
     }
 }
 
-void LCD8448::write_num_integer(uint8_t X, uint8_t Y, long num, int length, char filler, LCD_Display mode = NORMAL) {
+void LCD8448::write_num_integer(uint8_t X, uint8_t Y, long num, int length, char filler, LCD_Display mode) {
     if (_sleep) return;
     char buf[25];
     char st[27];
@@ -257,7 +257,7 @@ void LCD8448::write_num_integer(uint8_t X, uint8_t Y, long num, int length, char
     }
 }
 
-void LCD8448::write_num_float(uint8_t X, uint8_t Y, float num, int length, uint8_t dec, char divider, char filler, LCD_Display mode = NORMAL) {
+void LCD8448::write_num_float(uint8_t X, uint8_t Y, float num, int length, uint8_t dec, char divider, char filler, LCD_Display mode) {
     if (_sleep) return;
     char st[27];
     uint8_t neg = false;
@@ -268,7 +268,7 @@ void LCD8448::write_num_float(uint8_t X, uint8_t Y, float num, int length, uint8
     convertFloat(st, num, length, dec);
 
     if (divider != '.') {
-        for (int i = 0; i < sizeof(st); i++)
+        for (uint8_t i = 0; i < sizeof(st); i++)
             if (st[i] == '.')
                 st[i] = divider;
     }
@@ -276,11 +276,11 @@ void LCD8448::write_num_float(uint8_t X, uint8_t Y, float num, int length, uint8
     if (filler != ' ') {
         if (neg) {
             st[0] = '-';
-            for (int i = 1; i < sizeof(st); i++)
+            for (uint8_t i = 1; i < sizeof(st); i++)
                 if ((st[i] == ' ') || (st[i] == '-'))
                     st[i] = filler;
         } else {
-            for (int i = 0; i < sizeof(st); i++)
+            for (uint8_t i = 0; i < sizeof(st); i++)
                 if (st[i] == ' ')
                     st[i] = filler;
         }
@@ -293,7 +293,7 @@ void LCD8448::write_num_float(uint8_t X, uint8_t Y, float num, int length, uint8
 
 #pragma region SPECIAL METHODS
 /**************************************************************************************/
-void LCD8448::write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t charWith, uint8_t num, uint8_t line, uint8_t row, LCD_Display mode = NORMAL) {
+void LCD8448::write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_t charWith, uint8_t num, uint8_t line, uint8_t row, LCD_Display mode) {
     if (_sleep) return;
     unsigned char i, n;
 
@@ -316,8 +316,8 @@ void LCD8448::write_chinese(uint8_t X, uint8_t Y, const unsigned char *c, uint8_
     }
 }
 
-unsigned char LCD8448::prop_write_char(char c, LCD_Display mode = NORMAL) {
-    if (_sleep) return;
+unsigned char LCD8448::prop_write_char(char c, LCD_Display mode) {
+    if (_sleep) return ' ';
     int line, line_s = 0, line_e = 2;
     unsigned char *pFont;
     unsigned char ch;
@@ -346,7 +346,7 @@ unsigned char LCD8448::prop_write_char(char c, LCD_Display mode = NORMAL) {
     return ((unsigned char)(line_e + 2 - line_s));
 }
 
-void LCD8448::prop_write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode = NORMAL) {
+void LCD8448::prop_write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode) {
     if (_sleep) return;
     setXY(X, Y);
     while (*str) {
@@ -355,7 +355,7 @@ void LCD8448::prop_write_string(uint8_t X, uint8_t Y, const char *str, LCD_Displ
     }
 }
 /**************************************************************************************/
-void LCD8448::write_number_big(uint8_t X, uint8_t Y, int number, uint8_t comma, uint8_t digits, LCD_Display mode = NORMAL) {
+void LCD8448::write_number_big(uint8_t X, uint8_t Y, int number, uint8_t comma, uint8_t digits, LCD_Display mode) {
     if (_sleep) return;
     unsigned char index = 0;
     char numberInArray[digits + 2];
@@ -379,7 +379,7 @@ void LCD8448::write_number_big(uint8_t X, uint8_t Y, int number, uint8_t comma, 
     write_string_big(X, Y, numberInArray, NORMAL);
 }
 
-void LCD8448::write_number_big2(uint8_t X, uint8_t Y, uint8_t number, LCD_Display mode = NORMAL) {
+void LCD8448::write_number_big2(uint8_t X, uint8_t Y, uint8_t number, LCD_Display mode) {
     if (_sleep) return;
     unsigned char *ptr = (unsigned char *)font20_24;
     for (char i = 0; i < 3; i++) {
@@ -426,7 +426,7 @@ void LCD8448::vd_set_pixel_byte_any(uint8_t X0, uint8_t Y0, uint8_t c) {
     }
 }
 
-void LCD8448::vd_write_char(uint8_t X, uint8_t Y, char c, LCD_Display mode = NORMAL) {
+void LCD8448::vd_write_char(uint8_t X, uint8_t Y, char c, LCD_Display mode) {
     unsigned char line;
     unsigned char *pFont;
     unsigned char ch1;
@@ -455,7 +455,7 @@ void LCD8448::vd_write_char(uint8_t X, uint8_t Y, char c, LCD_Display mode = NOR
     }
 }
 
-void LCD8448::vd_write_char_v(uint8_t X, uint8_t Y, char c, LCD_Display mode = NORMAL) {
+void LCD8448::vd_write_char_v(uint8_t X, uint8_t Y, char c, LCD_Display mode) {
     unsigned char ch;
     unsigned char *pFont;
 
@@ -478,7 +478,7 @@ void LCD8448::vd_write_char_v(uint8_t X, uint8_t Y, char c, LCD_Display mode = N
     }
 }
 
-void LCD8448::vd_write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode = NORMAL) {
+void LCD8448::vd_write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode) {
     while (*str) {
         vd_write_char(X, Y, *str, mode);
         X += 6;
@@ -486,7 +486,7 @@ void LCD8448::vd_write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display
     }
 }
 
-void LCD8448::vd_write_string_v(uint8_t X, uint8_t Y, const char *str, LCD_Display mode = NORMAL) {
+void LCD8448::vd_write_string_v(uint8_t X, uint8_t Y, const char *str, LCD_Display mode) {
     while (*str && Y > 0) {
         vd_write_char_v(X, Y, *str, mode);
         Y -= 6;
@@ -581,7 +581,7 @@ void LCD8448::vd_write_circle(uint8_t X0, uint8_t Y0, uint8_t radius) {
 
 #pragma region SPECIAL METHODS
 /*************************************************************************************/
-void LCD8448::vd_write_framework(char *head, LCD_Display mode = NORMAL) {
+void LCD8448::vd_write_framework(char *head, LCD_Display mode) {
     // head in center position
     uint8_t lengthHead = strlen(head);
     uint8_t headCenter = (14 - lengthHead) * 3;
@@ -715,7 +715,7 @@ void LCD8448::vd_overlayOFF(void) {
 
 #pragma region SPECIAL SYMBOL METHODS
 /**************************************************************************************/
-void LCD8448::vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Symbols symbol, LCD_Display mode = NORMAL) {
+void LCD8448::vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Symbols symbol, LCD_Display mode) {
     // Battery symbol
     unsigned char ch;
     unsigned char *pSymbol;
@@ -811,7 +811,7 @@ void LCD8448::vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Symbols symbo
     }
 }
 
-void LCD8448::vd_antenna1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_antenna1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Network symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)antenna1;
@@ -821,7 +821,7 @@ void LCD8448::vd_antenna1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mod
     }
 }
 
-void LCD8448::vd_antenna2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_antenna2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Network symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)antenna2;
@@ -831,7 +831,7 @@ void LCD8448::vd_antenna2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mod
     }
 }
 
-void LCD8448::vd_antennaStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_antennaStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Battery symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)antennaStrength1;
@@ -841,7 +841,7 @@ void LCD8448::vd_antennaStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Dis
     }
 }
 
-void LCD8448::vd_antennaStrength2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_antennaStrength2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Battery symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)antennaStrength2;
@@ -851,7 +851,7 @@ void LCD8448::vd_antennaStrength2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Dis
     }
 }
 
-void LCD8448::vd_arrowUpDown(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_arrowUpDown(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Battery symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)arrowUpDown;
@@ -861,7 +861,7 @@ void LCD8448::vd_arrowUpDown(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display 
     }
 }
 
-void LCD8448::vd_barGraph(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_barGraph(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Battery symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)barGraph;
@@ -871,7 +871,7 @@ void LCD8448::vd_barGraph(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mod
     }
 }
 
-void LCD8448::vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Battery symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)battery;
@@ -881,7 +881,7 @@ void LCD8448::vd_battery(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode
     }
 }
 
-void LCD8448::vd_bluetooth(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_bluetooth(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Battery symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)bluetooth;
@@ -891,7 +891,7 @@ void LCD8448::vd_bluetooth(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mo
     }
 }
 
-void LCD8448::vd_envelope(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_envelope(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Battery symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)envelope;
@@ -901,7 +901,7 @@ void LCD8448::vd_envelope(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mod
     }
 }
 
-void LCD8448::vd_network(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_network(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Network symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)network;
@@ -911,7 +911,7 @@ void LCD8448::vd_network(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode
     }
 }
 
-void LCD8448::vd_sdCard(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_sdCard(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Network symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)sdCard;
@@ -921,7 +921,7 @@ void LCD8448::vd_sdCard(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode 
     }
 }
 
-void LCD8448::vd_signalStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_signalStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Network symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)signalStrength1;
@@ -931,7 +931,7 @@ void LCD8448::vd_signalStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Disp
     }
 }
 
-void LCD8448::vd_signalStrength2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_signalStrength2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Network symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)signalStrength2;
@@ -941,7 +941,7 @@ void LCD8448::vd_signalStrength2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Disp
     }
 }
 
-void LCD8448::vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL) {
+void LCD8448::vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode) {
     // Network symbol
     unsigned char ch;
     unsigned char *pImages = (unsigned char *)wireless;

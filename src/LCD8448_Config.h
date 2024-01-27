@@ -25,7 +25,7 @@
 //#define LCD_SHIELD
 
 // LCD PIN definition
-#ifdef ARDUINO && ARDUINO >= 100  // SPI Interface --- (using Arduino Digital Pins)
+#if defined(ARDUINO) && (ARDUINO >= 100) // SPI Interface --- (using Arduino Digital Pins)
 #ifdef LCD_SHIELD
 // PIN Definitions for SPI Interface --- using Arduino NOKIA LCD shield
 #define LCD_BL   7 // Backlight control (Arduino DIO Pin 7)
@@ -41,7 +41,7 @@
 #define LCD_DC   4 // DC - Data/Command(command active low)
 #define SPI_CS   3 // CE - Chip Select,Slave Transmit Enable(active low,Master Output)
 #define LCD_RST  2 // Reset
-#endif
+#endif // ARDUINO && (ARDUINO >= 100) // SPI Interface --- (using Arduino Digital Pins)
 
 #else
 #define LCD_PORT PORTB

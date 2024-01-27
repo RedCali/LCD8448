@@ -29,6 +29,7 @@
 #pragma message("Compiling for AVR ATMEGA Framework Architecture...")
 // #include "WProgram.h"
 #include <stdlib.h>
+#include <stdio.h>
 #endif
 
 #include <avr/io.h>
@@ -211,8 +212,8 @@ class LCD8448 {
     }
 
     void init(LCD_Mode initMode, uint8_t backlightInverted = false) {
-#ifdef LCD_DEBUG
 #if defined(ARDUINO) && ARDUINO >= 100
+#ifdef LCD_DEBUG
         Serial.print("LCD PINS --> SPI SCK: ");
         Serial.print(SPI_SCK);
         Serial.print(" / SPI MOSI: ");
@@ -424,7 +425,7 @@ class LCD8448 {
 
     inline void setXY(uint8_t X, uint8_t Y) {
 #ifdef LCD_DEBUG
-#ifdef ARDUINO &&ARDUINO >= 100
+#if defined(ARDUINO) && (ARDUINO >= 100)
         Serial.print("LCD Set X: ");
         Serial.print(X);
         Serial.print(" / Y: ");
