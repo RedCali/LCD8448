@@ -194,9 +194,8 @@ class LCD8448 {
     };
 #endif
   }
-  
-  [[deprecated("Replaced by 'setBacklightOFF()' and/or `setBacklightON()`")]]
-  inline void backlight(uint8_t dat) {
+
+  [[deprecated("Replaced by 'setBacklightOFF()' and/or `setBacklightON()`")]] inline void backlight(uint8_t dat) {
     if (_sleep) return;
 #if defined(ARDUINO) && ARDUINO >= 100
     if (_backlightInverted == INVERTED) {
@@ -359,7 +358,7 @@ class LCD8448 {
 
 #pragma region SPECIAL METHODS
   /**************************************************************************************/
-  void vd_write_framework(char *head, LCD_Display mode = NORMAL);
+  void vd_write_framework(const char *head, LCD_Display mode = NORMAL);
   void vd_alert(const char *text);
   void vd_question(const char *question, uint8_t active);
   void vd_overlayON(void);
@@ -412,10 +411,10 @@ class LCD8448 {
 #pragma region PRIVATE
   LCD_Mode _initMode = MODE_REGULAR;
   LCD_Display _backlightInverted = NORMAL;
-  uint8_t _contrast;
-  uint8_t _sleep;
-  unsigned char _virtualDisplay[504];
-  unsigned char _virtualDisplayTemp[504];
+  uint8_t _contrast = LCD_CONTRAST_DEFAULT;
+  uint8_t _sleep = false;
+  unsigned char _virtualDisplay[504] = {0};
+  unsigned char _virtualDisplayTemp[504] = {0};
 
 #pragma region INTERNAL METHODS
   inline void chipSelect() {
