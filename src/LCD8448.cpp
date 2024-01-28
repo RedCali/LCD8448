@@ -14,7 +14,6 @@
 
 * Any suggestions are welcome.
 */
-#include <math.h>
 
 #include "LCD8448.h"
 #include "LCD8448_ArduinoLogo.h"

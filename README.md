@@ -9,10 +9,8 @@ See [LCD8448](https://github.com/RedCali/LCD8448.git) for more detailed informat
 ## Open topics / Ideas
 
 - [ ] Using Base class for SPI and Pins
-  - [ ] CTor --> Passing the SPI and PIN objects from base class AND using KEY `explicit`
-- [ ] Refactor hard coded HEX constants to defines for better readability
+  - [ ] CTor --> Passing the SPI and PIN objects from base class
 - [ ] Documentation of Methods
-- [ ] Arduino Keywords
 
 ## Include the Library in your project
 
@@ -24,6 +22,12 @@ Copy the `LCD8448_Config.h` file beside your `main.cpp` (or any other folder) to
 #include "LCD8448_Config.h"
 // Include LCD Library
 #include <LCD8448.h>
+```
+
+Instantiate an object of the LCD
+
+```cpp
+LCD8448 lcd(LCD8448::MODE_REGULAR, LCD8448::NORMAL);
 ```
 
 ## Using with different IDE'S

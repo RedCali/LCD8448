@@ -35,6 +35,7 @@
 #include <avr/io.h>
 #include <stdint.h>
 #include <string.h>
+#include <math.h>
 
 #pragma region Constant definition
 // PCD8544 Commandset
