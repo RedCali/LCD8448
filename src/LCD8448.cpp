@@ -206,7 +206,7 @@ void LCD8448::write_num_integer(uint8_t X, uint8_t Y, long num, int length, char
   if (_sleep) return;
   char buf[25];
   char st[27];
-  int c = 0, f = 0;
+  int c = 0;
 
   if (num == 0) {
     if (length != 0) {
@@ -219,6 +219,7 @@ void LCD8448::write_num_integer(uint8_t X, uint8_t Y, long num, int length, char
       st[1] = 0;
     }
   } else {
+    int f = 0;
     uint8_t neg = (num < 0);
     if (neg) {
       num = -num;
@@ -246,21 +247,16 @@ void LCD8448::write_num_integer(uint8_t X, uint8_t Y, long num, int length, char
       st[i + neg + f] = buf[c - i - 1];
     }
     st[c + neg + f] = 0;
-
-    write_string(X, Y, st, mode);
   }
+  write_string(X, Y, st, mode);
 }
 
 void LCD8448::write_num_float(uint8_t X, uint8_t Y, float num, int length, uint8_t dec, char divider, char filler, LCD_Display mode) {
   if (_sleep) return;
   char st[27];
-  uint8_t neg = false;
-
-  if (num < 0)
-    neg = true;
 
   convertFloat(st, num, length, dec);
-
+  // Replace divider sign
   if (divider != '.') {
     for (uint8_t i = 0; i < sizeof(st); i++)
       if (st[i] == '.')
@@ -268,7 +264,7 @@ void LCD8448::write_num_float(uint8_t X, uint8_t Y, float num, int length, uint8
   }
 
   if (filler != ' ') {
-    if (neg) {
+    if (num < 0) { // Number is negative
       st[0] = '-';
       for (uint8_t i = 1; i < sizeof(st); i++)
         if ((st[i] == ' ') || (st[i] == '-'))
@@ -278,9 +274,8 @@ void LCD8448::write_num_float(uint8_t X, uint8_t Y, float num, int length, uint8
         if (st[i] == ' ')
           st[i] = filler;
     }
-
-    write_string(X, Y, st, mode);
   }
+  write_string(X, Y, st, mode);
 }
 /**************************************************************************************/
 #pragma endregion DIRECT METHODS
