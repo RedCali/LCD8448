@@ -49,9 +49,9 @@ void LCD8448::setContrast(uint8_t contrast) {
     contrast = LCD_CONTRAST_MAX;
   if (contrast < LCD_CONTRAST_MIN)
     contrast = LCD_CONTRAST_MIN;
-  writeCommand(PCD8544_FUNCTIONSET | PCD8544_EXTENDED_INSTRUCTION);
+  writeCommand(PCD8544_FUNCTION_SET | PCD8544_EXTENDED_INSTRUCTION);
   writeCommand(PCD8544_SET_VOP | contrast);
-  writeCommand(PCD8544_FUNCTIONSET);
+  writeCommand(PCD8544_FUNCTION_SET);
   _contrast = contrast;
 }
 
@@ -61,15 +61,15 @@ void LCD8448::enableSleep() {
   writeCommand(PCD8544_SET_XY_COLUM_X);
   for (int i = 0; i < 504; ++i)
     writeCommand(0);
-  writeCommand(PCD8544_FUNCTIONSET | PCD8544_POWERDOWN);
+  writeCommand(PCD8544_FUNCTION_SET | PCD8544_POWERDOWN);
 }
 
 void LCD8448::disableSleep() {
-  writeCommand(PCD8544_FUNCTIONSET | PCD8544_EXTENDED_INSTRUCTION);
+  writeCommand(PCD8544_FUNCTION_SET | PCD8544_EXTENDED_INSTRUCTION);
   writeCommand(PCD8544_SET_VOP | _contrast);
   writeCommand(PCD8544_SET_TEMP | LCD_TEMP);
   writeCommand(PCD8544_SET_BIAS | LCD_BIAS);
-  writeCommand(PCD8544_FUNCTIONSET);
+  writeCommand(PCD8544_FUNCTION_SET);
   writeCommand(PCD8544_DISPLAY_CONTROL | PCD8544_DISPLAY_NORMAL);
   _sleep = false;
 }

@@ -12,15 +12,15 @@ LCD_RST  6 // Reset & Reset Button
 
 // Define the update rate of the display and the LED
 #define UPDATE_INTERVAL 500
-// Baude rate of the serial interface
+// Baud rate of the serial interface
 #define SERIAL_BAUD 115200
 
 // LED Definitions
 #define LED_PIN 13
 unsigned char _pinState = 0x00;
 
-// Diaplay Variables
-// Text Backfound definition
+// Display variables
+// Text background definition
 LCD8448::LCD_Display _displayHighlight = LCD8448::NORMAL;
 LCD8448 lcd(LCD8448::MODE_REGULAR, LCD8448::NORMAL);
 // Storage for Runtime measuring for interval control
@@ -43,7 +43,7 @@ void setup() {
 }
 
 void loop() {
-  // Everytime the runtime exeeds the update intervll, we update the display
+  // Every time the runtime exceeds the update interval, we update the display
   if ((millis() - _millisPrevious) > UPDATE_INTERVAL) {
     // Write LED Pin
     digitalWrite(LED_PIN, _pinState);
@@ -80,7 +80,7 @@ void loop() {
     _counter++;
     _displayHighlight = (_displayHighlight == LCD8448::NORMAL) ? LCD8448::INVERTED : LCD8448::NORMAL;
 
-    // Store actull time _
+    // Store actual time _
     _millisPrevious = millis();
   }
 }

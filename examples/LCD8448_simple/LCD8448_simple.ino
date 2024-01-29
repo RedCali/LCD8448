@@ -12,20 +12,20 @@ LCD_RST  6 // Reset & Reset Button
 
 // Define the update rate of the display and the LED
 #define UPDATE_INTERVAL 500
-// Baude rate of the serial interface
+// Baud rate of the serial interface
 #define SERIAL_BAUD 115200
 
 // LED Definitions
 #define LED_PIN 13
 unsigned char _pinState = 0x00;
 
-// Diaplay Variables
-// Text Background definition
+// Display variables
+// Text background definition
 LCD8448::LCD_Display _displayHighlight = LCD8448::NORMAL;
 LCD8448 lcd(LCD8448::MODE_REGULAR, LCD8448::NORMAL);
-// Nummeric counter
+// Numeric counter
 unsigned long _counter = 0;
-// Char array for numeric convertion
+// Char array for numeric conversion
 char _bufferCounter[15];
 
 // Storage for Runtime measuring for interval control
@@ -48,14 +48,14 @@ void setup() {
 }
 
 void loop() {
-  // Everytime the runtime exeeds the update intervll, we update the display
+  // Every time the runtime exceeds the update interval, we update the display
   if ((millis() - _millisPrevious) > UPDATE_INTERVAL) {
     // Write LED Pin
     digitalWrite(LED_PIN, _pinState);
     // Toggle LED Pin state
     _pinState = (_pinState == 0) ? 0x01 : 0x00;
 
-    // Convert numeric value into string using "sprintf", incremnt the counter afterwarts and write to display
+    // Convert numeric value into string using "sprintf", increment the counter afterwarts and write to display
     sprintf(_bufferCounter, "%3d.%d", (int)(abs(_counter) / 10), (int)(abs(_counter) % 10));
     _counter++;
 
@@ -65,7 +65,7 @@ void loop() {
     lcd.write_string(1 * 6 + 3, 2, "The LCD8448", _displayHighlight);
     _displayHighlight = (_displayHighlight == LCD8448::NORMAL) ? LCD8448::INVERTED : LCD8448::NORMAL;
 
-    // Store actull time counter
+    // Store actual time counter
     _millisPrevious = millis();
     // Reset the counter if reaches 1000
     if (_counter >= 1000) _counter = 0;
