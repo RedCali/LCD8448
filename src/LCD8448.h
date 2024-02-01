@@ -73,20 +73,19 @@
 class LCD8448 {
    public:
 #pragma region PUBLIC
-
-    enum LCD_Mode : uint8_t {
+    typedef enum LCD_Mode : uint8_t {
         // Display Control Instruction,  bit DB3 = 1
         //                    // 3D0E
         MODE_BLANK = PCD8544_DISPLAY_CONTROL | PCD8544_DISPLAY_BLANK,       // 1000 - D=0 / E=0
         MODE_ALL_ON = PCD8544_DISPLAY_CONTROL | PCD8544_DISPLAY_ALL_ON,     // 1001 - D=0 / E=1
         MODE_REGULAR = PCD8544_DISPLAY_CONTROL | PCD8544_DISPLAY_NORMAL,    // 1100 - D=1 / E=0
         MODE_INVERTED = PCD8544_DISPLAY_CONTROL | PCD8544_DISPLAY_INVERTED  // 1101 - D=1 / E=1
-    };
+    } LCD_Mode;
 
-    enum LCD_Display : uint8_t {
+    typedef enum LCD_Display : uint8_t {
         NORMAL = 0x01,
         INVERTED = 0x00
-    };
+    } LCD_Display;
 
     explicit LCD8448(LCD_Mode initMode = MODE_REGULAR, LCD_Display backlightInverted = NORMAL);
 
