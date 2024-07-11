@@ -93,7 +93,7 @@ class LCD8448 {
     /**************************************************************************************/
     void init() {
 #if defined(ARDUINO) && ARDUINO >= 100
-#ifdef LCD_DEBUG
+#if defined(LCD_DEBUG)
         Serial.print("LCD PINS --> SPI SCK: ");
         Serial.print(SPI_SCK);
         Serial.print(" / SPI MOSI: ");
@@ -263,7 +263,7 @@ class LCD8448 {
 
     inline void mode(LCD_Mode mode) {
         if (_sleep) return;
-#ifdef LCD_DEBUG
+#if defined(LCD_DEBUG)
 #if defined(ARDUINO) && ARDUINO >= 100
         Serial.print("LCD MODE --> Selected mode: ");
         Serial.println(mode, HEX);
@@ -280,7 +280,7 @@ class LCD8448 {
         else
             _initMode = MODE_REGULAR;
 
-#ifdef LCD_DEBUG
+#if defined(LCD_DEBUG)
 #if defined(ARDUINO) && ARDUINO >= 100
         Serial.print("LCD MODE INVERTED --> Selected mode: ");
         Serial.println(_initMode, HEX);
@@ -300,7 +300,7 @@ class LCD8448 {
     void clearRow(int row, int startX, int endX);
 
     inline void setXY(uint8_t X, uint8_t Y) {
-#ifdef LCD_DEBUG
+#if defined(LCD_DEBUG)
 #if defined(ARDUINO) && (ARDUINO >= 100)
         Serial.print("LCD Set X: ");
         Serial.print(X);
@@ -401,6 +401,7 @@ class LCD8448 {
     void vd_signalStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL);
     void vd_signalStrength2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL);
     void vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL);
+    void vd_roundX(uint8_t X0, uint8_t Y0, LCD_Display mode = NORMAL);
 /**************************************************************************************/
 #pragma endregion SPECIAL DISPLAY SYMBOL METHODS
 /**************************************************************************************/

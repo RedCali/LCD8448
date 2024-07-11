@@ -19,7 +19,7 @@
 #define LCD8448_CONFIG_H_
 
 // Commend / uncomment the define for Debugging
-#define LCD_DEBUG
+//#define LCD_DEBUG
 
 // Define if the Arduino LCD Shield is used
 //#define LCD_SHIELD

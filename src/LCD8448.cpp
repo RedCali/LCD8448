@@ -16,6 +16,7 @@
 */
 
 #include "LCD8448.h"
+
 #include "LCD8448_ArduinoLogo.h"
 #include "LCD8448_font.h"
 #include "LCD8448_font_big.h"
@@ -150,7 +151,7 @@ void LCD8448::write_char(unsigned char c, LCD_Display mode) {
 
 void LCD8448::write_string(uint8_t X, uint8_t Y, const char *str, LCD_Display mode) {
   if (_sleep) return;
-#ifdef LCD_DEBUG
+#if defined(LCD_DEBUG)
 #if defined(ARDUINO) && ARDUINO >= 100
   Serial.print("LCD writeString: ");
   Serial.println(str);
@@ -263,7 +264,7 @@ void LCD8448::write_num_float(uint8_t X, uint8_t Y, float num, int length, uint8
   }
 
   if (filler != ' ') {
-    if (num < 0) { // Number is negative
+    if (num < 0) {  // Number is negative
       st[0] = '-';
       for (uint8_t i = 1; i < sizeof(st); i++)
         if ((st[i] == ' ') || (st[i] == '-'))
@@ -770,7 +771,7 @@ void LCD8448::vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Symbols symbo
       break;
     }
     default: {
-#ifdef LCD_DEBUGS
+#if defined(LCD_DEBUG)
 #if defined(ARDUINO) && ARDUINO >= 100
       Serial.print("Selected Symbol doesn't exist!\nSymbol Index: ");
       Serial.println(mode);
@@ -909,6 +910,15 @@ void LCD8448::vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mod
   unsigned char *pImages = (unsigned char *)wireless;
   for (char i = 0; i < 8; i++) {
     unsigned char ch = pgm_read_byte(pImages + i + 8 * state);
+    vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
+  }
+}
+
+void LCD8448::vd_roundX(uint8_t X0, uint8_t Y0, LCD_Display mode) {
+  // Network symbol
+  unsigned char *pImages = (unsigned char *)roundX;
+  for (char i = 0; i < 7; i++) {
+    unsigned char ch = pgm_read_byte(pImages + i);
     vd_set_pixel_byte(X0 + i, Y0, (mode == NORMAL) ? ch : (ch ^ 0xff));
   }
 }
