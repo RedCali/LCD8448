@@ -382,7 +382,9 @@ class LCD8448 {
         SD_CARD,
         SIGNAL_STRENGTH_1,
         SIGNAL_STRENGTH_2,
-        WIRELESS
+        WIRELESS,
+        ROUND_X1,
+        ROUND_X2
     };
 
     void vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Symbols symbol, LCD_Display mode = NORMAL);
@@ -401,7 +403,8 @@ class LCD8448 {
     void vd_signalStrength1(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL);
     void vd_signalStrength2(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL);
     void vd_wireless(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Display mode = NORMAL);
-    void vd_roundX(uint8_t X0, uint8_t Y0, LCD_Display mode = NORMAL);
+    void vd_roundX1(uint8_t X0, uint8_t Y0, LCD_Display mode = NORMAL);
+    void vd_roundX2(uint8_t X0, uint8_t Y0, LCD_Display mode = NORMAL);
 /**************************************************************************************/
 #pragma endregion SPECIAL DISPLAY SYMBOL METHODS
 /**************************************************************************************/

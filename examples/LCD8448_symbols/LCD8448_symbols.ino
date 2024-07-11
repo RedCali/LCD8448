@@ -1,5 +1,5 @@
 // Include LCD Library
-#include <LCD8448.h>
+#include "LCD8448.h"
 /*
 // PIN Definitions for SPI Interface --- using Arduino NOKIA LCD shield
 LCD_BL   7 // Backlight control (Arduino DIO Pin 7)
@@ -68,6 +68,7 @@ void loop() {
     lcd.vd_bluetooth(30, 3, _counter % 2, LCD8448::NORMAL);
     lcd.vd_envelope(40, 3, _counter % 2, LCD8448::NORMAL);
     lcd.vd_network(60, 3, _counter % 3, LCD8448::NORMAL);
+    lcd.vd_roundX1(70, 3, LCD8448::NORMAL);
 
     lcd.vd_sdCard(10, 4, _counter % 3, LCD8448::NORMAL);
     lcd.vd_signalStrength1(30, 4, _counter % 8, LCD8448::NORMAL);
