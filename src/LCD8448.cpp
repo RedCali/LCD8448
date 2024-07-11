@@ -75,7 +75,7 @@ void LCD8448::disableSleep() {
   _sleep = false;
 }
 
-void LCD8448::clearLCD(void) {
+void LCD8448::clear(void) {
   if (_sleep) return;
 
   writeCommand(0x0c);
@@ -773,10 +773,12 @@ void LCD8448::vd_symbol(uint8_t X0, uint8_t Y0, uint8_t state, LCD_Symbols symbo
     case ROUND_X1: {
       pSymbol = (unsigned char *)roundX1;
       width = 7;
+      break;
     }
     case ROUND_X2: {
       pSymbol = (unsigned char *)roundX2;
       width = 7;
+      break;
     }
     default: {
 #if defined(LCD_DEBUG)

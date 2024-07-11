@@ -158,7 +158,7 @@ class LCD8448 {
         writeCommand(PCD8544_SET_BIAS | LCD_BIAS);  // Set Bias System (BSx):0 0 0 1 0 BS2 BS1 BS0=0001 0011;BS2=0, BS1=1, BS0=1==>N=4,MUX RATE=1:48
         writeCommand(PCD8544_FUNCTION_SET);         // Function Set:0 0 1 0 0 PD V H=0010 0000;PD=0,V=0,H=0;
 
-        clearLCD();
+        clear();
         vd_clear();
 
         mode(_initMode);
@@ -295,7 +295,7 @@ class LCD8448 {
 
     void disableSleep();
 
-    void clearLCD(void);
+    void clear(void);
 
     void clearRow(int row, int startX, int endX);
 

@@ -18,7 +18,7 @@ invert	KEYWORD2
 setContrast	KEYWORD2
 enableSleep	KEYWORD2
 disableSleep	KEYWORD2
-clearLCD	KEYWORD2
+clear	KEYWORD2
 clearRow	KEYWORD2
 setXY	KEYWORD2
 drawArduinoLogo	KEYWORD2
