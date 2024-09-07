@@ -18,7 +18,7 @@ invert	KEYWORD2
 setContrast	KEYWORD2
 enableSleep	KEYWORD2
 disableSleep	KEYWORD2
-clearLCD	KEYWORD2
+clear	KEYWORD2
 clearRow	KEYWORD2
 setXY	KEYWORD2
 drawArduinoLogo	KEYWORD2
@@ -68,6 +68,8 @@ vd_sdCard	KEYWORD2
 vd_signalStrength1	KEYWORD2
 vd_signalStrength2	KEYWORD2
 vd_wireless	KEYWORD2
+vd_roundX1	KEYWORD2
+vd_roundX2	KEYWORD2
 
 ==================================
 CONSTANTS

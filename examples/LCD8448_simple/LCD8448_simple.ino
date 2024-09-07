@@ -1,5 +1,5 @@
 // Include LCD Library
-#include <LCD8448.h>
+#include "LCD8448.h"
 /*
 // PIN Definitions for SPI Interface --- using Arduino NOKIA LCD shield
 LCD_BL   7 // Backlight control (Arduino DIO Pin 7)
