@@ -18,6 +18,11 @@
 ********** Symbols *******************
 * The Symbol arrays created with: https://github.com/RedCali/Image2Bitmap
 */
+/*
+********** Ideas for new Symbols *****
+* Box - ballot , Tick Box, Box, X-Box
+* Unicode U+2610 U+2611 U+2612
+*/
 #pragma once
 #ifndef LCD8448_SYMBOLS_H_
 #define LCD8448_SYMBOLS_H_
