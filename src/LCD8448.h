@@ -32,6 +32,9 @@
 #include <stdlib.h>
 #endif
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunknown-pragmas"
+
 #include <avr/io.h>
 #include <math.h>
 #include <stdint.h>
@@ -70,7 +73,7 @@
 #define LCD_DATA 1
 #pragma endregion Constant definition
 
-//template< bool DEBUG >
+// template< bool DEBUG >
 class LCD8448 {
  public:
 #pragma region PUBLIC
@@ -523,5 +526,7 @@ class LCD8448 {
 #pragma endregion INTERNAL METHODS
 #pragma endregion PRIVATE
 };
+
+#pragma GCC diagnostic pop
 
 #endif /* LCD8448_H_ */
